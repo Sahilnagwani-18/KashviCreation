@@ -11,8 +11,6 @@ function AdminDashboard() {
   const dispatch = useDispatch();
   const { featureImageList } = useSelector((state) => state.commonFeature);
 
-  console.log(uploadedImageUrl, "uploadedImageUrl");
-
   function handleUploadFeatureImage() {
     dispatch(addFeatureImage(uploadedImageUrl)).then((data) => {
       if (data?.payload?.success) {
@@ -27,34 +25,46 @@ function AdminDashboard() {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
-  console.log(featureImageList, "featureImageList");
-
   return (
-    <div>
-      <ProductImageUpload
-        imageFile={imageFile}
-        setImageFile={setImageFile}
-        uploadedImageUrl={uploadedImageUrl}
-        setUploadedImageUrl={setUploadedImageUrl}
-        setImageLoadingState={setImageLoadingState}
-        imageLoadingState={imageLoadingState}
-        isCustomStyling={true}
-        // isEditMode={currentEditedId !== null}
-      />
-      <Button onClick={handleUploadFeatureImage} className="mt-5 w-full">
-        Upload
-      </Button>
-      <div className="flex flex-col gap-4 mt-5">
+    <div className="p-6 max-w-4xl mx-auto bg-[#F5F5F5] min-h-screen">
+      {/* Image Upload Box */}
+      <div className="bg-[#C0BEBE] p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+        <ProductImageUpload
+          imageFile={imageFile}
+          setImageFile={setImageFile}
+          uploadedImageUrl={uploadedImageUrl}
+          setUploadedImageUrl={setUploadedImageUrl}
+          setImageLoadingState={setImageLoadingState}
+          imageLoadingState={imageLoadingState}
+          isCustomStyling={true}
+        />
+        <Button
+          onClick={handleUploadFeatureImage}
+          className="mt-5 w-full bg-[#D19A66] hover:bg-[#B67C49] text-white font-semibold py-3 rounded-lg transition-all duration-300 transform hover:scale-105"
+        >
+          Upload
+        </Button>
+      </div>
+
+      {/* Display Uploaded Images */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         {featureImageList && featureImageList.length > 0
-          ? featureImageList.map((featureImgItem) => (
-              <div className="relative">
+          ? featureImageList.map((featureImgItem, index) => (
+              <div
+                key={index}
+                className="relative group overflow-hidden rounded-lg shadow-md bg-[#C0BEBE] transition-all duration-300 hover:shadow-xl"
+              >
                 <img
                   src={featureImgItem.image}
-                  className="w-full h-[300px] object-cover rounded-t-lg"
+                  className="w-full h-[250px] object-cover rounded-lg transform scale-100 group-hover:scale-105 transition-transform duration-300"
+                  alt="Uploaded"
                 />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#D19A66] via-transparent to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className="text-white text-center font-semibold">Feature Image</p>
+                </div>
               </div>
             ))
-          : null}
+          : <p className="text-center text-gray-600">No images uploaded yet.</p>}
       </div>
     </div>
   );
