@@ -1,27 +1,8 @@
 import { Button } from "@/components/ui/button";
-import bannerOne from "../../assets/banner-1.webp";
-import bannerTwo from "../../assets/banner-2.webp";
-import bannerThree from "../../assets/banner-3.webp";
 import {
-  Airplay,
   ChevronLeftIcon,
   ChevronRightIcon,
-  Shirt
 } from "lucide-react";
-import {
-  Baby,
-  CloudRain,
-  Flame,
-  Image,
-  Sun,
-  Thermometer,
-  Umbrella,
-  Watch,
-  Wind,
-} from "lucide-react";
-
-
-
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,41 +16,251 @@ import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/components/ui/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
+import FramerMotion from "@/components/shopping-view/Users";
+import styled from 'styled-components';
 
-// const categoriesWithIcon = [
-//   { id: "silk", label: "Silk", icon: ShirtIcon },
-//   { id: "wool", label: "Wool", icon: CloudLightning },
-//   { id: "cotton", label: "Cotton", icon: BabyIcon },
-//   { id: "polyester", label: "Polyester", icon: WatchIcon },
-//   { id: "nylon", label: "Nylon", icon: UmbrellaIcon },
-// ];
-
-
-// const brandsWithIcon = [
-//   { id: "pink", label: "Pink", icon: Shirt },
-//   { id: "green", label: "Green", icon: WashingMachine },
-//   { id: "red", label: "Red", icon: ShoppingBasket },
-//   { id: "yellow", label: "Yellow", icon: Airplay },
-//   { id: "white", label: "White", icon: Images },
-//   { id: "blue", label: "Blue", icon: Heater },
-// ];
-
-const categoriesWithIcon = [
-  { id: "silk", label: "Silk", icon: Wind }, 
-  { id: "wool", label: "Wool", icon: CloudRain }, 
-  { id: "cotton", label: "Cotton", icon: Baby }, 
-  { id: "polyester", label: "Polyester", icon: Thermometer }, 
-  { id: "nylon", label: "Nylon", icon: Umbrella }, 
+const categories = [
+  { id: "silk", label: "Silk" },
+  { id: "wool", label: "Wool" },
+  { id: "cotton", label: "Cotton" },
+  { id: "polyester", label: "Polyester" },
+  { id: "nylon", label: "Nylon" },
 ];
 
-const brandsWithIcon = [
-  { id: "pink", label: "Pink", icon: Shirt }, 
-  { id: "green", label: "Green", icon: Sun }, 
-  { id: "red", label: "Red", icon: Flame }, 
-  { id: "yellow", label: "Yellow", icon: Airplay }, 
-  { id: "white", label: "White", icon: Image }, 
-  { id: "blue", label: "Blue", icon: Watch }, 
+const colors = [
+  { id: "pink", label: "Pink" },
+  { id: "green", label: "Green" },
+  { id: "red", label: "Red" },
+  { id: "yellow", label: "Yellow" },
+  { id: "white", label: "White" },
+  { id: "blue", label: "Blue" },
 ];
+
+const Styles = styled.div`
+  @property --k {
+    syntax: '<number>';
+    initial-value: -1;
+    inherits: true;
+  }
+
+  @property --ang {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html {
+    scrollbar-width: none;
+    height: calc(var(--n) * 100%);
+  }
+
+  body, header, main, section, article, figure {
+    display: grid;
+  }
+
+  body {
+    --dir: 0;
+    grid-template-rows: max-content 1fr max-content;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    color: #dedede;
+    font: clamp(0.625em, 3vmin, 1.5em) / 1.25 saira, sans-serif;
+    animation: k 1s linear;
+    animation-timeline: scroll();
+
+    &::before {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: #000;
+      filter: url(#grain);
+      content: '';
+    }
+
+    @media (max-aspect-ratio: 2/3) {
+      --dir: 1;
+    }
+  }
+
+  @keyframes k {
+    to {
+      --k: 1;
+    }
+  }
+
+  svg[height='0'][aria-hidden='true'] {
+    position: fixed;
+  }
+
+  header {
+    place-content: center;
+    place-items: center;
+    padding: 0.5em;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  em {
+    max-width: 32em;
+  }
+
+  main {
+    overflow: hidden;
+    perspective: 50em;
+  }
+
+  section, article {
+    transform-style: preserve-3d;
+  }
+
+  section {
+    --r: calc(2 + var(--dir)) / 3;
+    --w: clamp(4em, min(50vh, 25vw), 18em);
+    --z: calc(var(--f, 1.25) * -0.5 * var(--w) / tan(0.5turn / var(--n));
+    place-self: center;
+    translate: 0 0 var(--z);
+    rotate: var(--dir) calc(1 - var(--dir)) 0 calc((var(--k) + 0.5) * -1turn);
+  }
+
+  article, header, figure, img, figcaption {
+    grid-area: 1 / 1;
+  }
+
+  article {
+    --j: var(--i) / var(--n);
+    --dif-lin: calc(var(--j) - mod(var(--k) + 1, 1));
+    --abs-lin: abs(var(--dif-lin));
+    --dif-mid: calc(0.5 - var(--abs-lin));
+    --abs-mid: abs(var(--dif-mid));
+    --dif-arc: calc(2 * (0.5 - var(--abs-mid)));
+    --lim: 0.35;
+    --sel: max(0, calc((var(--lim) - var(--dif-arc)) / var(--lim)));
+    --out: calc(1 - var(--sel));
+    --hov: 0;
+    width: var(--w);
+    aspect-ratio: var(--r);
+    transform: rotate3d(var(--dir), calc(1 - var(--dir)), 0, calc(var(--j) * 1turn))
+      translatez(var(--z)) rotate(calc(var(--dir) * 0.5turn));
+
+    header {
+      rotate: y calc(var(--hov) * 0.5turn);
+    }
+
+    &:hover, &:focus-within {
+      --hov: round(var(--sel));
+    }
+
+    @supports not (scale: abs(-1)) {
+      --abs-lin: max(var(--dif-lin), -1 * var(--dif-lin));
+      --abs-mid: max(var(--dif-mid), -1 * var(--dif-mid));
+    }
+  }
+
+  article header, figure {
+    --ang: calc(-45deg + var(--hov) * 180deg);
+    overflow: hidden;
+    position: relative;
+    border: solid 4px #0000;
+    border-radius: 0.5em;
+    backface-visibility: hidden;
+    box-shadow: 5px 5px 13px #000;
+    background: var(--url) 50% / cover padding-box,
+      linear-gradient(#333 0 0) padding-box,
+      repeating-conic-gradient(
+          from var(--ang),
+          #0000 0% 15%,
+          color-mix(in srgb, #f48c06 calc(var(--sel) * 100%), #333) 20% 30%,
+          #0000 35% 50%
+        )
+        border-box #121212;
+    background-blend-mode: multiply, normal, normal;
+    isolation: isolate;
+    pointer-events: none;
+    transition: 0.35s ease-out;
+    transition-property: rotate, --ang;
+
+    &::after {
+      position: absolute;
+      inset: 0;
+      opacity: var(--out);
+      background: #03071e;
+      mix-blend-mode: color;
+      pointer-events: none;
+      content: '';
+    }
+  }
+
+  h2, em, img, a {
+    pointer-events: auto;
+  }
+
+  h2, em {
+    opacity: round(up, var(--sel));
+  }
+
+  h2 {
+    font-size: 1.125em;
+  }
+
+  figure {
+    rotate: y calc((1 + var(--hov)) * 0.5turn);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: var(--r);
+    object-fit: cover;
+    object-position: var(--pos);
+  }
+
+  figcaption {
+    align-self: end;
+    padding: 0.5em;
+    background: #fff3;
+    color: #040404;
+    font: max(0.75rem, 0.75em) caveat, cursive;
+    text-align: right;
+    text-shadow: 1px 1px 1px #0006;
+    backdrop-filter: blur(5px) brightness(1.5);
+
+    a {
+      color: #370617;
+    }
+  }
+
+  aside {
+    position: fixed;
+    bottom: 0;
+    padding: 0.5em;
+  }
+
+  .box-info-scrollani {
+    margin: 0.5em;
+    border-left: solid 5px #dc3055;
+    padding: 0.75em;
+    box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.35);
+    background: #851d40;
+    color: #fff;
+    font: 1em / 1.25 ubuntu, trebuchet ms, arial, sans-serif;
+
+    @supports (animation-timeline: scroll()) {
+      display: none;
+    }
+  }
+
+  kbd {
+    padding: 2px;
+    background: hsla(0, 0%, 0%, 0.35);
+    font: 1.1em / 1.2 ubuntu mono, consolas, monaco, monospace;
+  }
+`;
 
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -77,11 +268,8 @@ function ShoppingHome() {
     (state) => state.shopProducts
   );
   const { featureImageList } = useSelector((state) => state.commonFeature);
-
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-
   const { user } = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -91,7 +279,6 @@ function ShoppingHome() {
     const currentFilter = {
       [section]: [getCurrentItem.id],
     };
-
     sessionStorage.setItem("filters", JSON.stringify(currentFilter));
     navigate(`/shop/listing`);
   }
@@ -124,7 +311,7 @@ function ShoppingHome() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList.length);
-    }, 15000);
+    }, 3000);
 
     return () => clearInterval(timer);
   }, [featureImageList]);
@@ -138,104 +325,108 @@ function ShoppingHome() {
     );
   }, [dispatch]);
 
-  console.log(productList, "productList");
-
   useEffect(() => {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="relative w-full h-[800px] overflow-hidden bg-contain">
-        {featureImageList && featureImageList.length > 0
-          ? featureImageList.map((slide, index) => (
-              <img
-                src={slide?.image}
-                key={index}
-                className={`${
-                  index === currentSlide ? "opacity-100" : "opacity-0"
-                } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
-              />
-            ))
-          : null}
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() =>
-            setCurrentSlide(
-              (prevSlide) =>
-                (prevSlide - 1 + featureImageList.length) %
-                featureImageList.length
-            )
-          }
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
-        >
-          <ChevronLeftIcon className="w-4 h-4" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() =>
-            setCurrentSlide(
-              (prevSlide) => (prevSlide + 1) % featureImageList.length
-            )
-          }
-          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80"
-        >
-          <ChevronRightIcon className="w-4 h-4" />
-        </Button>
-      </div>
-      <section className="py-12 bg-gray-50">
+      <Styles>
+        <div className="relative w-full h-[800px] overflow-hidden bg-contain">
+          {featureImageList.map((slide, index) => (
+            <img
+              src={slide.image}
+              key={index}
+              alt={slide.alt}
+              className={`${
+                index === currentSlide ? 'opacity-100' : 'opacity-0'
+              } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
+            />
+          ))}
+          <button
+            onClick={() =>
+              setCurrentSlide(
+                (prevSlide) =>
+                  (prevSlide - 1 + featureImageList.length) %
+                  featureImageList.length
+              )
+            }
+            className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg"
+          >
+            &lt;
+          </button>
+          <button
+            onClick={() =>
+              setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList.length)
+            }
+            className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg"
+          >
+            &gt;
+          </button>
+        </div>
+      </Styles>
+
+      {/* Shop by Category Section */}
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
-            Shop by category
+            Shop by Category
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {categoriesWithIcon.map((categoryItem) => (
-              <Card
+            {categories.map((categoryItem) => (
+              <div
+                key={categoryItem.id}
                 onClick={() =>
                   handleNavigateToListingPage(categoryItem, "category")
                 }
-                className="cursor-pointer hover:shadow-lg transition-shadow"
+                className="cursor-pointer bg-orange-50 p-6 rounded-lg text-center hover:bg-orange-100 transition-all duration-300 hover:scale-105"
               >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
-                  <span className="font-bold">{categoryItem.label}</span>
-                </CardContent>
-              </Card>
+                <div className="text-4xl font-bold text-orange-500 mb-4">
+                  {categoryItem.label[0]}
+                </div>
+                <span className="font-bold text-gray-800">
+                  {categoryItem.label}
+                </span>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Colors Available Section */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Colors Available</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Colors Available
+          </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {brandsWithIcon.map((brandItem) => (
-              <Card
-                onClick={() => handleNavigateToListingPage(brandItem, "brand")}
-                className="cursor-pointer hover:shadow-lg transition-shadow"
+            {colors.map((colorItem) => (
+              <div
+                key={colorItem.id}
+                onClick={() => handleNavigateToListingPage(colorItem, "brand")}
+                className="cursor-pointer bg-white p-6 rounded-lg text-center hover:shadow-lg transition-all duration-300 hover:scale-105"
+                style={{ backgroundColor: colorItem.id }}
               >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <brandItem.icon className="w-12 h-12 mb-4 text-primary" />
-                  <span className="font-bold">{brandItem.label}</span>
-                </CardContent>
-              </Card>
+                <span className="font-bold text-white mix-blend-difference">
+                  {colorItem.label}
+                </span>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-12">
+      {/* Featured Products Section */}
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
-            Feature Products
+            Featured Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productList && productList.length > 0
               ? productList.map((productItem) => (
                   <ShoppingProductTile
+                    key={productItem.id}
                     handleGetProductDetails={handleGetProductDetails}
                     product={productItem}
                     handleAddtoCart={handleAddtoCart}
@@ -245,11 +436,14 @@ function ShoppingHome() {
           </div>
         </div>
       </section>
+
+      {/* Product Details Dialog */}
       <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
       />
+      <FramerMotion className="mt-5"/>
     </div>
   );
 }
