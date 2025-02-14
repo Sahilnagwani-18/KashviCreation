@@ -113,29 +113,14 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/listing",
   },
   {
-    id: "silk",
-    label: "Silk",
-    path: "/shop/listing",
+    id: "about",
+    label: "About Us",
+    path: "/shop/about-us",
   },
   {
-    id: "wool",
-    label: "Wool",
-    path: "/shop/listing",
-  },
-  {
-    id: "cotton",
-    label: "Cotton",
-    path: "/shop/listing",
-  },
-  {
-    id: "polyester",
-    label: "Polyester",
-    path: "/shop/listing",
-  },
-  {
-    id: "nylon",
-    label: "Nylon",
-    path: "/shop/listing",
+    id: "store",
+    label: "Find Store",
+    path: "/shop/store",
   },
   {
     id: "search",
