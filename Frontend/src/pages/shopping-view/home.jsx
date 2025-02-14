@@ -1,8 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +14,10 @@ import { useToast } from "@/components/ui/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
 import FramerMotion from "@/components/shopping-view/Users";
-import styled from 'styled-components';
+import styled from "styled-components";
+import VideoCarousel from "@/components/shopping-view/VideoGallery";
+
+
 
 const categories = [
   { id: "silk", label: "Silk" },
@@ -339,7 +339,7 @@ function ShoppingHome() {
               key={index}
               alt={slide.alt}
               className={`${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
+                index === currentSlide ? "opacity-100" : "opacity-0"
               } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
             />
           ))}
@@ -357,7 +357,9 @@ function ShoppingHome() {
           </button>
           <button
             onClick={() =>
-              setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList.length)
+              setCurrentSlide(
+                (prevSlide) => (prevSlide + 1) % featureImageList.length
+              )
             }
             className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg"
           >
@@ -416,6 +418,10 @@ function ShoppingHome() {
         </div>
       </section>
 
+      <VideoCarousel/>
+
+      
+
       {/* Featured Products Section */}
       <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
@@ -443,8 +449,9 @@ function ShoppingHome() {
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
       />
-      <FramerMotion className="mt-5"/>
+      <FramerMotion className="mt-5" />
     </div>
+    
   );
 }
 
