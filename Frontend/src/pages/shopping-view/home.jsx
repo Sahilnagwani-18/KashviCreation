@@ -4,19 +4,24 @@ import bannerTwo from "../../assets/banner-2.webp";
 import bannerThree from "../../assets/banner-3.webp";
 import {
   Airplay,
-  BabyIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  CloudLightning,
-  Heater,
-  Images,
-  Shirt,
-  ShirtIcon,
-  ShoppingBasket,
-  UmbrellaIcon,
-  WashingMachine,
-  WatchIcon,
+  Shirt
 } from "lucide-react";
+import {
+  Baby,
+  CloudRain,
+  Flame,
+  Image,
+  Sun,
+  Thermometer,
+  Umbrella,
+  Watch,
+  Wind,
+} from "lucide-react";
+
+
+
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,22 +36,41 @@ import { useToast } from "@/components/ui/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
 
+// const categoriesWithIcon = [
+//   { id: "silk", label: "Silk", icon: ShirtIcon },
+//   { id: "wool", label: "Wool", icon: CloudLightning },
+//   { id: "cotton", label: "Cotton", icon: BabyIcon },
+//   { id: "polyester", label: "Polyester", icon: WatchIcon },
+//   { id: "nylon", label: "Nylon", icon: UmbrellaIcon },
+// ];
+
+
+// const brandsWithIcon = [
+//   { id: "pink", label: "Pink", icon: Shirt },
+//   { id: "green", label: "Green", icon: WashingMachine },
+//   { id: "red", label: "Red", icon: ShoppingBasket },
+//   { id: "yellow", label: "Yellow", icon: Airplay },
+//   { id: "white", label: "White", icon: Images },
+//   { id: "blue", label: "Blue", icon: Heater },
+// ];
+
 const categoriesWithIcon = [
-  { id: "men", label: "Men", icon: ShirtIcon },
-  { id: "women", label: "Women", icon: CloudLightning },
-  { id: "kids", label: "Kids", icon: BabyIcon },
-  { id: "accessories", label: "Accessories", icon: WatchIcon },
-  { id: "footwear", label: "Footwear", icon: UmbrellaIcon },
+  { id: "silk", label: "Silk", icon: Wind }, 
+  { id: "wool", label: "Wool", icon: CloudRain }, 
+  { id: "cotton", label: "Cotton", icon: Baby }, 
+  { id: "polyester", label: "Polyester", icon: Thermometer }, 
+  { id: "nylon", label: "Nylon", icon: Umbrella }, 
 ];
 
 const brandsWithIcon = [
-  { id: "nike", label: "Nike", icon: Shirt },
-  { id: "adidas", label: "Adidas", icon: WashingMachine },
-  { id: "puma", label: "Puma", icon: ShoppingBasket },
-  { id: "levi", label: "Levi's", icon: Airplay },
-  { id: "zara", label: "Zara", icon: Images },
-  { id: "h&m", label: "H&M", icon: Heater },
+  { id: "pink", label: "Pink", icon: Shirt }, 
+  { id: "green", label: "Green", icon: Sun }, 
+  { id: "red", label: "Red", icon: Flame }, 
+  { id: "yellow", label: "Yellow", icon: Airplay }, 
+  { id: "white", label: "White", icon: Image }, 
+  { id: "blue", label: "Blue", icon: Watch }, 
 ];
+
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { productList, productDetails } = useSelector(
@@ -122,7 +146,7 @@ function ShoppingHome() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="relative w-full h-[600px] overflow-hidden">
+      <div className="relative w-full h-[800px] overflow-hidden bg-contain">
         {featureImageList && featureImageList.length > 0
           ? featureImageList.map((slide, index) => (
               <img
@@ -186,7 +210,7 @@ function ShoppingHome() {
 
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Shop by Brand</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">Colors Available</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {brandsWithIcon.map((brandItem) => (
               <Card
