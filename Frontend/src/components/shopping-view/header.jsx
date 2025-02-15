@@ -41,7 +41,7 @@ function MenuItems() {
       {shoppingViewHeaderMenuItems.map((menuItem) => (
         <Label
           onClick={() => handleNavigate(menuItem)}
-          className={`text-sm font-medium cursor-pointer hover:text-orange-500 transition-colors duration-300 
+          className={`text-lg font-bold cursor-pointer hover:text-orange-500 transition-colors duration-300 
             ${menuItem.id === 'search' ? 'text-orange-700' : ''}`}
           key={menuItem.id}
         >
