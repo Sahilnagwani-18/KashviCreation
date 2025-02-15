@@ -28,8 +28,6 @@ import KashviImage from "@/assets/Kashvi.jpg";
 
 function MenuItems() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   function handleNavigate(getCurrentMenuItem) {
     sessionStorage.removeItem("filters");
@@ -41,8 +39,8 @@ function MenuItems() {
       {shoppingViewHeaderMenuItems.map((menuItem) => (
         <Label
           onClick={() => handleNavigate(menuItem)}
-          className={`text-lg font-bold cursor-pointer hover:text-orange-500 transition-colors duration-300 
-            ${menuItem.id === 'search' ? 'text-orange-700' : ''}`}
+          className={`text-lg font-bold cursor-pointer hover:text-[#D4AF37] transition-colors duration-300 
+            ${menuItem.id === 'search' ? 'text-[#D4AF37]' : 'text-[#FAF3E0]'}`}
           key={menuItem.id}
         >
           {menuItem.label}
@@ -72,7 +70,7 @@ function HeaderRightContent() {
       {/* Find Store Button with Glow Effect */}
       <Button
         onClick={() => navigate("/shop/store")}
-        className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-orange-500/50"
+        className="bg-[#D4AF37] hover:bg-[#B88A44] text-[#800020] font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-[#D4AF37]/50"
       >
         <MapPin className="mr-2 h-5 w-5" />
         Find Store
@@ -84,21 +82,17 @@ function HeaderRightContent() {
           onClick={() => setOpenCartSheet(true)}
           variant="outline"
           size="icon"
-          className="relative hover:bg-orange-50 transition-colors duration-300"
+          className="relative border-[#D4AF37] hover:bg-[#B88A44] transition-colors duration-300"
         >
-          <ShoppingCart className="w-6 h-6" />
-          <span className="absolute top-[-5px] right-[2px] font-bold text-sm text-orange-500">
+          <ShoppingCart className="w-6 h-6 text-[#D4AF37]" />
+          <span className="absolute top-[-5px] right-[2px] font-bold text-sm text-[#D4AF37]">
             {cartItems?.items?.length || 0}
           </span>
           <span className="sr-only">User cart</span>
         </Button>
         <UserCartWrapper
           setOpenCartSheet={setOpenCartSheet}
-          cartItems={
-            cartItems && cartItems.items && cartItems.items.length > 0
-              ? cartItems.items
-              : []
-          }
+          cartItems={cartItems?.items?.length > 0 ? cartItems.items : []}
         />
       </Sheet>
 
@@ -106,17 +100,17 @@ function HeaderRightContent() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="bg-black hover:shadow-lg transition-shadow duration-300">
-            <AvatarFallback className="bg-black text-white font-extrabold">
+            <AvatarFallback className="bg-black text-[#FAF3E0] font-extrabold">
               {user?.userName[0]?.toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" className="w-56">
+        <DropdownMenuContent side="right" className="w-56 bg-[#FAF3E0] text-[#800020]">
           <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => navigate("/shop/account")}
-            className="hover:bg-orange-50 transition-colors duration-300"
+            className="hover:bg-[#D4AF37] hover:text-[#800020] transition-colors duration-300"
           >
             <UserCog className="mr-2 h-4 w-4" />
             Account
@@ -124,7 +118,7 @@ function HeaderRightContent() {
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={handleLogout}
-            className="hover:bg-orange-50 transition-colors duration-300"
+            className="hover:bg-[#D4AF37] hover:text-[#800020] transition-colors duration-300"
           >
             <LogOut className="mr-2 h-4 w-4" />
             Logout
@@ -136,22 +130,22 @@ function HeaderRightContent() {
 }
 
 function ShoppingHeader() {
-  const { isAuthenticated } = useSelector((state) => state.auth);
-
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-white shadow-sm">
-      <div className="flex h-16 items-center justify-between px-4 md:px-6">
+    <header className="sticky top-0 z-40 h-20 w-full border-b bg-[#800020] text-[#FAF3E0] shadow-lg">
+      <div className="flex h-20 items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link
           to="/shop/home"
           className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-300"
         >
           <img
-            src={KashviImage} // Use the imported image
+            src={KashviImage}
             alt="Logo"
-            className="h-10 w-15 rounded-full object-cover" // Adjust size and styling
+            className="h-10 w-15 rounded-full object-cover"
           />
-          <span className="font-bold text-xl text-gray-900">KASHVI CREATION</span>
+          <span className="font-bold text-xl text-[#D4AF37]">
+            KASHVI CREATION
+          </span>
         </Link>
 
         {/* Mobile Menu */}
@@ -160,13 +154,13 @@ function ShoppingHeader() {
             <Button
               variant="outline"
               size="icon"
-              className="lg:hidden hover:bg-orange-50 transition-colors duration-300"
+              className="lg:hidden border-[#D4AF37] hover:bg-[#B88A44] transition-colors duration-300"
             >
-              <Menu className="h-6 w-6" />
+              <Menu className="h-6 w-6 text-[#D4AF37]" />
               <span className="sr-only">Toggle header menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-full max-w-xs">
+          <SheetContent side="left" className="w-full max-w-xs bg-[#FAF3E0] text-[#800020]">
             <MenuItems />
             <HeaderRightContent />
           </SheetContent>
