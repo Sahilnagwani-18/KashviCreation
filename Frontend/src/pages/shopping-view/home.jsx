@@ -17,8 +17,6 @@ import FramerMotion from "@/components/shopping-view/Users";
 import styled from "styled-components";
 import VideoCarousel from "@/components/shopping-view/VideoGallery";
 
-
-
 const categories = [
   { id: "silk", label: "Silk" },
   { id: "wool", label: "Wool" },
@@ -368,59 +366,79 @@ function ShoppingHome() {
         </div>
       </Styles>
 
-      {/* Shop by Category Section */}
       <section className="py-12 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Shop by Category
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {categories.map((categoryItem) => (
-              <div
-                key={categoryItem.id}
-                onClick={() =>
-                  handleNavigateToListingPage(categoryItem, "category")
-                }
-                className="cursor-pointer bg-orange-50 p-6 rounded-lg text-center hover:bg-orange-100 transition-all duration-300 hover:scale-105"
-              >
-                <div className="text-4xl font-bold text-orange-500 mb-4">
-                  {categoryItem.label[0]}
-                </div>
-                <span className="font-bold text-gray-800">
-                  {categoryItem.label}
-                </span>
-              </div>
-            ))}
+  <div className="container mx-auto px-4">
+    <h2 className="text-4xl font-bold text-center mb-12">
+      Shop by Category
+    </h2>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {categories.map((categoryItem, index) => (
+        <div
+          key={categoryItem.id}
+          onClick={() => handleNavigateToListingPage(categoryItem, "category")}
+          className={`cursor-pointer bg-orange-50 p-8 rounded-3xl text-center hover:bg-orange-100 transition-all duration-300 hover:scale-105 shadow-xl flex flex-col items-center justify-center ${
+            index % 2 === 0 ? "mt-8" : "mb-8"
+          }`}
+        >
+          <div className="text-5xl font-extrabold text-orange-500 mb-4">
+            {categoryItem.label[0]}
           </div>
+          <span className="font-semibold text-gray-900 text-xl">
+            {categoryItem.label}
+          </span>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
-      {/* Colors Available Section */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Colors Available
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {colors.map((colorItem) => (
-              <div
-                key={colorItem.id}
-                onClick={() => handleNavigateToListingPage(colorItem, "brand")}
-                className="cursor-pointer bg-white p-6 rounded-lg text-center hover:shadow-lg transition-all duration-300 hover:scale-105"
-                style={{ backgroundColor: colorItem.id }}
-              >
-                <span className="font-bold text-white mix-blend-difference">
-                  {colorItem.label}
-                </span>
-              </div>
-            ))}
+
+
+      <section className="py-16 bg-gray-50"> 
+  <div className="container mx-auto px-6">
+    <h2 className="text-4xl font-bold text-center mb-12">
+      Colors Available
+    </h2>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {colors.map((colorItem, index) => (
+        <div
+          key={colorItem.id}
+          onClick={() => handleNavigateToListingPage(colorItem, "brand")}
+          className={`cursor-pointer w-full h-[400px] p-6 rounded-3xl shadow-xl text-center transition-transform transform hover:scale-105 flex flex-col justify-between ${
+            index % 2 === 0 ? "mt-10" : "mt-0"
+          }`}
+          style={{ backgroundColor: colorItem.id }}
+        >
+          <div>
+            <h2 className="text-2xl font-semibold mb-2 text-white mix-blend-difference">
+              {colorItem.label}
+            </h2>
+            <p className="mt-1 font-bold">Stylish {colorItem.label} Sarees</p>
           </div>
+
+          <div className="flex justify-center mt-1">
+            <img
+              src={`/images/image${colorItem.id}.jpg`}
+              className="rounded-lg w-48 h-28 object-cover shadow-md max-w-full"
+              alt={colorItem.label}
+            />
+          </div>
+
+          <button className="mt-auto px-5 py-3 border border-black rounded-full text-black text-lg font-medium hover:bg-black hover:text-white transition w-full">
+            Explore More
+          </button>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
-      <VideoCarousel/>
 
-      
+
+
+      <VideoCarousel />
 
       {/* Featured Products Section */}
       <section className="py-12 bg-white">
@@ -451,7 +469,6 @@ function ShoppingHome() {
       />
       <FramerMotion className="mt-5" />
     </div>
-    
   );
 }
 

@@ -35,7 +35,7 @@ export default function VideoCarousel() {
 
   // Auto-change video every 5 seconds
   useEffect(() => {
-    const interval = setInterval(nextVideo, 5000);
+    const interval = setInterval(nextVideo, 10000);
     return () => clearInterval(interval);
   }, []);
 
