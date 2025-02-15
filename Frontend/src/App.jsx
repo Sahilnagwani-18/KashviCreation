@@ -24,6 +24,7 @@ import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/search";
 import FindStore from "./pages/FindStore";
 import "./App.css";
+import AboutUs from "./components/shopping-view/Aboutus";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -88,7 +89,7 @@ function App() {
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="store" element={<FindStore />} />
-          <Route path="about-us" element={""} />
+          <Route path="about-us" element={<AboutUs/>} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="search" element={<SearchProducts />} />

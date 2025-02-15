@@ -16,6 +16,7 @@ import { getFeatureImages } from "@/store/common-slice";
 import FramerMotion from "@/components/shopping-view/Users";
 import styled from "styled-components";
 import VideoCarousel from "@/components/shopping-view/VideoGallery";
+import Gallery from "@/components/shopping-view/Gallery";
 
 const categories = [
   { id: "silk", label: "Silk" },
@@ -460,6 +461,8 @@ function ShoppingHome() {
           </div>
         </div>
       </section>
+      <h1 className="text-4xl font-bold text-center mb-8">Gallery</h1>
+      <Gallery/>
 
       {/* Product Details Dialog */}
       <ProductDetailsDialog
