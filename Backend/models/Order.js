@@ -36,6 +36,7 @@ const OrderSchema = new mongoose.Schema({
   totalAmount: Number,
   orderDate: Date,
   orderUpdateDate: Date,
+  invoicePath: String,
 });
 
 
