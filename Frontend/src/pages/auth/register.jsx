@@ -26,7 +26,8 @@ function AuthRegister() {
         toast({
           title: data?.payload?.message,
         });
-        navigate("/auth/login");
+        console.log("Redirecting to /auth/verify-otp with email:", formData.email); // Debugging
+        navigate("/auth/verify-otp", { state: { email: formData.email } });
       } else {
         toast({
           title: data?.payload?.message,
@@ -41,13 +42,13 @@ function AuthRegister() {
       initial={{ opacity: 0, scale: 0.9 }} 
       animate={{ opacity: 1, scale: 1 }} 
       transition={{ duration: 0.5 }}
-      className=" w-full max-w-md space-y-6 p-8 bg-white "
+      className="w-full max-w-md space-y-6 p-8 bg-white"
     >
       <div className="text-center w-full">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Create New Account</h1>
         <p className="mt-2 text-gray-600">
           Already have an account?
-          <Link className="font-medium ml-2 text-primary hover:underline  text-orange-400  hover:text-orange-600" to="/auth/login">
+          <Link className="font-medium ml-2 text-primary hover:underline text-orange-400 hover:text-orange-600" to="/auth/login">
             Login
           </Link>
         </p>
@@ -58,11 +59,9 @@ function AuthRegister() {
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}
-        
       />
     </motion.div>
   );
 }
 
 export default AuthRegister;
-

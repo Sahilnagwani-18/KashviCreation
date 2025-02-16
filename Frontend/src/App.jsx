@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import AuthLayout from "./components/auth/layout";
 import AuthLogin from "./pages/auth/login";
 import AuthRegister from "./pages/auth/register";
+import AuthVerifyOTP from "./pages/auth/verify-otp"; // Import the OTP verification page
 import AdminLayout from "./components/admin-view/layout";
 import AdminDashboard from "./pages/admin-view/dashboard";
 import AdminProducts from "./pages/admin-view/products";
@@ -38,8 +39,6 @@ function App() {
 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
-  console.log(isLoading, user);
-
   return (
     <div className="flex flex-col overflow-hidden ">
       <Routes>
@@ -62,6 +61,11 @@ function App() {
         >
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
+          <Route
+            path="verify-otp"
+            element={<AuthVerifyOTP />}
+            onEnter={() => console.log("Entering /auth/verify-otp")} // Debugging
+          />
         </Route>
         <Route
           path="/admin"
@@ -89,7 +93,7 @@ function App() {
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="store" element={<FindStore />} />
-          <Route path="about-us" element={<AboutUs/>} />
+          <Route path="about-us" element={<AboutUs />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="search" element={<SearchProducts />} />

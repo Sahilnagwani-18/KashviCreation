@@ -14,8 +14,6 @@ import { useToast } from "@/components/ui/use-toast";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import FramerMotion from "@/components/shopping-view/Users";
-import styled from "styled-components";
-import VideoCarousel from "@/components/shopping-view/VideoGallery";
 import Gallery from "@/components/shopping-view/Gallery";
 import VideoCarousel from '@/components/shopping-view/VideoGallery';
 import shopimage from "@/assets/Shop.png";
@@ -131,7 +129,7 @@ const ShoppingHome = () => {
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 bg-[#FDF7E3] text-[#4A2C2A]">
+    <div className="flex flex-col min-h-screen  bg-[#FDF7E3] text-[#4A2C2A]">
       {/* Hero Section */}
       <section className="relative h-[90vh] overflow-hidden">
         {featureImageList.map((slide, index) => (
