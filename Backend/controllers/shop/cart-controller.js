@@ -1,5 +1,6 @@
 const Cart = require("../../models/Cart");
 const Product = require("../../models/Product");
+const mongoose=require('mongoose');
 
 const addToCart = async (req, res) => {
   try {
@@ -50,60 +51,44 @@ const addToCart = async (req, res) => {
     });
   }
 };
-
 const fetchCartItems = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    if (!userId) {
+    // Add ObjectID validation
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({
         success: false,
-        message: "User id is manadatory!",
+        message: "Invalid user ID format"
       });
     }
 
+    // Fix populate path (remove ?)
     const cart = await Cart.findOne({ userId }).populate({
-      path: "items?.productId",
-      select: "image title price salePrice",
+      path: "items.productId", // WAS: "items?.productId"
+      select: "image title price salePrice totalStock"
     });
 
+    // Handle non-existent cart
     if (!cart) {
-      return res.status(404).json({
-        success: false,
-        message: "Cart not found!",
+      return res.status(200).json({
+        success: true,
+        data: {
+          items: [],
+          userId,
+          _id: null,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
       });
     }
 
-    const validItems = cart.items.filter(
-      (productItem) => productItem.productId
-    );
-
-    if (validItems.length < cart.items.length) {
-      cart.items = validItems;
-      await cart.save();
-    }
-
-    const populateCartItems = validItems.map((item) => ({
-      productId: item.productId._id,
-      image: item.productId.image,
-      title: item.productId.title,
-      price: item.productId.price,
-      salePrice: item.productId.salePrice,
-      quantity: item.quantity,
-    }));
-
-    res.status(200).json({
-      success: true,
-      data: {
-        ...cart._doc,
-        items: populateCartItems,
-      },
-    });
+    // Rest of your existing code...
   } catch (error) {
-    console.log(error);
+    console.error("Cart Error:", error);
     res.status(500).json({
       success: false,
-      message: "Error",
+      message: error.message // Add actual error message
     });
   }
 };

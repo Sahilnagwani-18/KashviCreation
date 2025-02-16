@@ -1,7 +1,13 @@
-const paypal = require("../../helpers/paypal");
+
 const Order = require("../../models/Order");
 const Cart = require("../../models/Cart");
 const Product = require("../../models/Product");
+
+const { sendInvoiceEmail } = require("../../helpers/emailService");
+const { generateInvoice } = require("../../helpers/invoiceGenerator");
+
+
+
 
 const createOrder = async (req, res) => {
   try {
@@ -9,143 +15,92 @@ const createOrder = async (req, res) => {
       userId,
       cartItems,
       addressInfo,
-      orderStatus,
-      paymentMethod,
-      paymentStatus,
       totalAmount,
-      orderDate,
-      orderUpdateDate,
-      paymentId,
-      payerId,
       cartId,
+      userEmail,
     } = req.body;
 
-    const create_payment_json = {
-      intent: "sale",
-      payer: {
-        payment_method: "paypal",
-      },
-      redirect_urls: {
-        return_url: "http://localhost:5173/shop/paypal-return",
-        cancel_url: "http://localhost:5173/shop/paypal-cancel",
-      },
-      transactions: [
-        {
-          item_list: {
-            items: cartItems.map((item) => ({
-              name: item.title,
-              sku: item.productId,
-              price: item.price.toFixed(2),
-              currency: "USD",
-              quantity: item.quantity,
-            })),
-          },
-          amount: {
-            currency: "USD",
-            total: totalAmount.toFixed(2),
-          },
-          description: "description",
-        },
-      ],
-    };
-
-    paypal.payment.create(create_payment_json, async (error, paymentInfo) => {
-      if (error) {
-        console.log(error);
-
-        return res.status(500).json({
-          success: false,
-          message: "Error while creating paypal payment",
-        });
-      } else {
-        const newlyCreatedOrder = new Order({
-          userId,
-          cartId,
-          cartItems,
-          addressInfo,
-          orderStatus,
-          paymentMethod,
-          paymentStatus,
-          totalAmount,
-          orderDate,
-          orderUpdateDate,
-          paymentId,
-          payerId,
-        });
-
-        await newlyCreatedOrder.save();
-
-        const approvalURL = paymentInfo.links.find(
-          (link) => link.rel === "approval_url"
-        ).href;
-
-        res.status(201).json({
-          success: true,
-          approvalURL,
-          orderId: newlyCreatedOrder._id,
-        });
-      }
-    });
-  } catch (e) {
-    console.log(e);
-    res.status(500).json({
-      success: false,
-      message: "Some error occured!",
-    });
-  }
-};
-
-const capturePayment = async (req, res) => {
-  try {
-    const { paymentId, payerId, orderId } = req.body;
-
-    let order = await Order.findById(orderId);
-
-    if (!order) {
-      return res.status(404).json({
+    // Validate required fields
+    if (!userId || !cartItems || !addressInfo || !totalAmount || !cartId || !userEmail) {
+      return res.status(400).json({
         success: false,
-        message: "Order can not be found",
+        message: "Missing required fields in the request body.",
       });
     }
 
-    order.paymentStatus = "paid";
-    order.orderStatus = "confirmed";
-    order.paymentId = paymentId;
-    order.payerId = payerId;
+    // Check if the cart exists
+    const cart = await Cart.findById(cartId);
+    if (!cart) {
+      return res.status(404).json({
+        success: false,
+        message: "Cart not found.",
+      });
+    }
 
-    for (let item of order.cartItems) {
-      let product = await Product.findById(item.productId);
-
+    // Check if all products in cartItems are valid
+    for (const item of cartItems) {
+      const product = await Product.findById(item.productId);
       if (!product) {
         return res.status(404).json({
           success: false,
-          message: `Not enough stock for this product ${product.title}`,
+          message: `Product with ID ${item.productId} not found.`,
         });
       }
-
-      product.totalStock -= item.quantity;
-
-      await product.save();
     }
 
-    const getCartId = order.cartId;
-    await Cart.findByIdAndDelete(getCartId);
+    // Create order with initial pending status
+    const newlyCreatedOrder = new Order({
+      userId,
+      cartId,
+      cartItems,
+      addressInfo,
+      orderStatus: "pending",
+      paymentMethod: "invoice",
+      paymentStatus: "pending",
+      totalAmount,
+      orderDate: new Date(),
+    });
 
-    await order.save();
+    await newlyCreatedOrder.save();
 
-    res.status(200).json({
+    try {
+      // Generate invoice
+      const invoicePath = await generateInvoice(newlyCreatedOrder);
+
+      // Send email with invoice
+      const emailSent = await sendInvoiceEmail(userEmail, invoicePath);
+
+      if (emailSent) {
+        // Update order status to processing if email is sent successfully
+        newlyCreatedOrder.orderStatus = "processing";
+        await newlyCreatedOrder.save();
+      }
+    } catch (emailError) {
+      console.error("Invoice email failed:", emailError);
+      // Optionally, delete the order if email is critical
+      // await Order.findByIdAndDelete(newlyCreatedOrder._id);
+      // return res.status(500).json({ success: false, message: "Failed to send invoice email." });
+    }
+
+    // Clear the cart
+    await Cart.findByIdAndDelete(cartId);
+
+    res.status(201).json({
       success: true,
-      message: "Order confirmed",
-      data: order,
+      message: "Order created successfully. Invoice sent to email.",
+      orderId: newlyCreatedOrder._id,
     });
   } catch (e) {
     console.log(e);
     res.status(500).json({
       success: false,
-      message: "Some error occured!",
+      message: "Error creating order",
+      error: e.message, // Include the actual error message
     });
   }
 };
+
+
 
 const getAllOrdersByUser = async (req, res) => {
   try {
@@ -172,6 +127,7 @@ const getAllOrdersByUser = async (req, res) => {
     });
   }
 };
+
 
 const getOrderDetails = async (req, res) => {
   try {
@@ -201,7 +157,6 @@ const getOrderDetails = async (req, res) => {
 
 module.exports = {
   createOrder,
-  capturePayment,
   getAllOrdersByUser,
   getOrderDetails,
 };

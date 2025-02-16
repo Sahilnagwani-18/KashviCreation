@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-
+const mongoose=require('mongoose');
 const OrderSchema = new mongoose.Schema({
   userId: String,
   cartId: String,
@@ -20,14 +19,24 @@ const OrderSchema = new mongoose.Schema({
     phone: String,
     notes: String,
   },
-  orderStatus: String,
-  paymentMethod: String,
-  paymentStatus: String,
+  orderStatus: {
+    type: String,
+    enum: ["pending", "processing", "completed", "cancelled"],
+    default: "pending",
+  },
+  paymentMethod: {
+    type: String,
+    default: "invoice",
+  },
+  paymentStatus: {
+    type: String,
+    enum: ["pending", "completed"],
+    default: "pending",
+  },
   totalAmount: Number,
   orderDate: Date,
   orderUpdateDate: Date,
-  paymentId: String,
-  payerId: String,
 });
+
 
 module.exports = mongoose.model("Order", OrderSchema);
