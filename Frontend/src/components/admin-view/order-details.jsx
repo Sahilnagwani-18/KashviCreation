@@ -22,7 +22,13 @@ function AdminOrderDetailsView({ orderDetails }) {
   const dispatch = useDispatch();
   const { toast } = useToast();
 
-  console.log(orderDetails, "orderDetailsorderDetails");
+  if (!orderDetails) {
+    return (
+      <DialogContent className="sm:max-w-[600px]">
+        <p className="text-center text-gray-600">No order details available.</p>
+      </DialogContent>
+    );
+  }
 
   function handleUpdateStatus(event) {
     event.preventDefault();
@@ -52,7 +58,7 @@ function AdminOrderDetailsView({ orderDetails }) {
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Date</p>
-            <Label>{orderDetails?.orderDate.split("T")[0]}</Label>
+            <Label>{new Date(orderDetails?.orderDate).toLocaleDateString()}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Price</p>
@@ -90,7 +96,7 @@ function AdminOrderDetailsView({ orderDetails }) {
             <ul className="grid gap-3">
               {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
                 ? orderDetails?.cartItems.map((item) => (
-                    <li className="flex items-center justify-between">
+                    <li key={item.productId} className="flex items-center justify-between">
                       <span>Title: {item.title}</span>
                       <span>Quantity: {item.quantity}</span>
                       <span>Price: ${item.price}</span>
@@ -105,11 +111,15 @@ function AdminOrderDetailsView({ orderDetails }) {
             <div className="font-medium">Shipping Info</div>
             <div className="grid gap-0.5 text-muted-foreground">
               <span>{user.userName}</span>
-              <span>{orderDetails?.addressInfo?.address}</span>
-              <span>{orderDetails?.addressInfo?.city}</span>
-              <span>{orderDetails?.addressInfo?.pincode}</span>
-              <span>{orderDetails?.addressInfo?.phone}</span>
-              <span>{orderDetails?.addressInfo?.notes}</span>
+              {orderDetails?.addressInfo && (
+                <>
+                  <span>{orderDetails.addressInfo.address}</span>
+                  <span>{orderDetails.addressInfo.city}</span>
+                  <span>{orderDetails.addressInfo.pincode}</span>
+                  <span>{orderDetails.addressInfo.phone}</span>
+                  <span>{orderDetails.addressInfo.notes}</span>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -123,10 +133,9 @@ function AdminOrderDetailsView({ orderDetails }) {
                 componentType: "select",
                 options: [
                   { id: "pending", label: "Pending" },
-                  { id: "inProcess", label: "In Process" },
-                  { id: "inShipping", label: "In Shipping" },
-                  { id: "delivered", label: "Delivered" },
-                  { id: "rejected", label: "Rejected" },
+                  { id: "processing", label: "Processing" },
+                  { id: "completed", label: "Completed" },
+                  { id: "cancelled", label: "Cancelled" },
                 ],
               },
             ]}

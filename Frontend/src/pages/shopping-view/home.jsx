@@ -224,14 +224,15 @@ const ShoppingHome = () => {
           <p className="text-gray-600 text-center mb-8 md:mb-12">Curated collection of our finest pieces</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {productList?.map((product) => (
+            {productList && productList.length > 0
+  ?productList?.map((product) => (
               <ShoppingProductTile
-                key={product.id}
+                key={product._id}
                 product={product}
                 handleGetProductDetails={handleGetProductDetails}
                 handleAddtoCart={handleAddtoCart}
               />
-            ))}
+            )): <p className="text-center text-gray-600">No products found.</p>}
           </div>
         </div>
       </section>

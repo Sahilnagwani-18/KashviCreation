@@ -264,6 +264,10 @@ const registerUser = async (req, res) => {
     const verificationCode = newUser.generateVerificationCode();
     await newUser.save();
 
+    const otpSMSMessage = `Welcome To Kashvi Creation !!
+    Your verification code is: ${verificationCode}. This code will expire in 10 minutes.`;
+    
+
     // Generate email template for OTP
     function generateOTPEmailTemplate(verificationCode) {
       return `
@@ -329,20 +333,26 @@ const registerUser = async (req, res) => {
 
     // Send OTP via email
     const otpEmailMessage = generateOTPEmailTemplate(verificationCode);
-    await sendEmail({ email, subject: "Email Verification", message: otpEmailMessage });
+    
 
     // Send welcome email
     const welcomeEmailMessage = generateWelcomeEmailTemplate(userName);
-    await sendEmail({ email, subject: "Welcome to Kashvi Creation!", message: welcomeEmailMessage });
+    
 
     // Send OTP via SMS
-    const otpSMSMessage = `Welcome To Kashvi Creation !!
-    Your verification code is: ${verificationCode}. This code will expire in 10 minutes.`;
-    await sendOTPViaSMS(phoneNumber, otpSMSMessage);
+    
 
     // Send welcome SMS
     const welcomeSMSMessage = `Welcome to Kashvi Creation, ${userName}! Thank you for registering with us.`;
-    await sendOTPViaSMS(phoneNumber, welcomeSMSMessage);
+    
+
+
+    await Promise.all([
+      sendOTPViaSMS(phoneNumber, otpSMSMessage),
+      sendOTPViaSMS(phoneNumber, welcomeSMSMessage),
+      sendEmail({ email, subject: "Email Verification", message: otpEmailMessage }),
+      sendEmail({ email, subject: "Welcome to Kashvi Creation!", message: welcomeEmailMessage })
+  ]);
 
     res.status(200).json({
       success: true,
@@ -458,7 +468,7 @@ const loginUser = async (req, res) => {
         userName: checkUser.userName,
       },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "60m" }
+      { expiresIn: "1d" }
     );
 
     res.cookie("token", token, { httpOnly: true, secure: false }).json({
