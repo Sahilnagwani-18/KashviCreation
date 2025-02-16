@@ -23,7 +23,6 @@ import UserCartWrapper from "./cart-wrapper";
 import { useEffect, useState } from "react";
 import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../ui/label";
-
 import KashviImage from "@/assets/Kashvi.jpg";
 
 function MenuItems() {

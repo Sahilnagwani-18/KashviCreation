@@ -37,7 +37,7 @@ const Counter = ({ end, duration, startCounting }) => {
 };
 
 
-const FramerMotion = () => {
+const BottomSection = () => {
   const [startCounting, setStartCounting] = useState(false);
   const counterData = [
     { end: 3000, label: "Customer", delay: 0.2 },
@@ -175,4 +175,4 @@ const FramerMotion = () => {
   );
 };
 
-export default FramerMotion;
+export default BottomSection;

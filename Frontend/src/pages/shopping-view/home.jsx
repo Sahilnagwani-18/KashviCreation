@@ -13,7 +13,7 @@ import { getFeatureImages } from "@/store/common-slice";
 import { useToast } from "@/components/ui/use-toast";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
-import FramerMotion from "@/components/shopping-view/Users";
+import BottomSection from "@/components/shopping-view/bottom-home-section";
 import Gallery from "@/components/shopping-view/Gallery";
 import VideoCarousel from '@/components/shopping-view/VideoGallery';
 import shopimage from "@/assets/Shop.png";
@@ -237,7 +237,7 @@ const ShoppingHome = () => {
       </section>
 
       {/* Users Section */}
-      <FramerMotion className="py-10 md:py-20" />
+      <BottomSection className="py-10 md:py-20" />
 
       {/* Product Details Dialog */}
       <ProductDetailsDialog
