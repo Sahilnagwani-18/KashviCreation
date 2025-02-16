@@ -1,3 +1,28 @@
+// export const registerFormControls = [
+//   {
+//     name: "userName",
+//     label: "User Name",
+//     placeholder: "Enter your user name",
+//     componentType: "input",
+//     type: "text",
+//   },
+//   {
+//     name: "email",
+//     label: "Email",
+//     placeholder: "Enter your email",
+//     componentType: "input",
+//     type: "email",
+//   },
+//   {
+//     name: "password",
+//     label: "Password",
+//     placeholder: "Enter your password",
+//     componentType: "input",
+//     type: "password",
+//   },
+// ];
+
+
 export const registerFormControls = [
   {
     name: "userName",
@@ -14,6 +39,13 @@ export const registerFormControls = [
     type: "email",
   },
   {
+    name: "phoneNumber",
+    label: "Phone Number",
+    placeholder: "Enter your phone number",
+    componentType: "input",
+    type: "tel", // Use 'tel' for phone numbers
+  },
+  {
     name: "password",
     label: "Password",
     placeholder: "Enter your password",
@@ -22,13 +54,31 @@ export const registerFormControls = [
   },
 ];
 
+// export const loginFormControls = [
+//   {
+//     name: "email",
+//     label: "Email",
+//     placeholder: "Enter your email",
+//     componentType: "input",
+//     type: "email",
+//   },
+//   {
+//     name: "password",
+//     label: "Password",
+//     placeholder: "Enter your password",
+//     componentType: "input",
+//     type: "password",
+//   },
+// ];
+
+
 export const loginFormControls = [
   {
     name: "email",
-    label: "Email",
-    placeholder: "Enter your email",
+    label: "Email or Phone Number",
+    placeholder: "Enter your email or phone number",
     componentType: "input",
-    type: "email",
+    type: "text", // Use 'text' to allow both email and phone number
   },
   {
     name: "password",

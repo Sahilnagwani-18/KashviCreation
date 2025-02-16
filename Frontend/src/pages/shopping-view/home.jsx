@@ -23,7 +23,7 @@ const categories = [
     id: "silk", 
     label: "Silk Sarees", 
     description: "Luxurious silk sarees for royal occasions",
-    image: {shopimage},
+    image: shopimage,
     bgColor: "from-purple-500 to-pink-500"
   },
   { 
@@ -129,9 +129,9 @@ const ShoppingHome = () => {
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col min-h-screen  bg-[#FDF7E3] text-[#4A2C2A]">
+    <div className="flex flex-col min-h-screen bg-[#FDF7E3] text-[#4A2C2A]">
       {/* Hero Section */}
-      <section className="relative h-[90vh] overflow-hidden mx-10">
+      <section className="relative h-[50vh] md:h-[90vh] overflow-hidden mx-4 md:mx-10">
         {featureImageList.map((slide, index) => (
           <div
             key={index}
@@ -147,10 +147,10 @@ const ShoppingHome = () => {
             <div className="absolute inset-0 bg-black bg-opacity-40" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center text-white">
-                <h1 className="text-6xl font-bold mb-4">Elegant Saree Collection</h1>
-                <p className="text-xl mb-8">Discover timeless beauty in every drape</p>
+                <h1 className="text-3xl md:text-6xl font-bold mb-4">Elegant Saree Collection</h1>
+                <p className="text-lg md:text-xl mb-8">Discover timeless beauty in every drape</p>
                 <Button 
-                  className="bg-white text-black hover:bg-gray-200 px-8 py-6 text-lg rounded-full"
+                  className="bg-white text-black hover:bg-gray-200 px-6 py-4 md:px-8 md:py-6 text-lg rounded-full"
                   onClick={() => navigate('/shop/listing')}
                 >
                   Explore Collection
@@ -163,40 +163,40 @@ const ShoppingHome = () => {
           onClick={prevSlide}
           className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full hover:bg-white"
         >
-          <ChevronLeft className="h-8 w-8" />
+          <ChevronLeft className="h-6 w-6 md:h-8 md:w-8" />
         </button>
         <button
           onClick={nextSlide}
           className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full hover:bg-white"
         >
-          <ChevronRight className="h-8 w-8" />
+          <ChevronRight className="h-6 w-6 md:h-8 md:w-8" />
         </button>
       </section>
 
       {/* Categories Section */}
-      <section className="py-20 bg-white">
+      <section className="py-10 md:py-20 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-4">Explore Our Saree Collections</h2>
-          <p className="text-gray-600 text-center mb-12">Find the perfect saree for every occasion</p>
+          <h2 className="text-2xl md:text-4xl font-bold text-center mb-4">Explore Our Saree Collections</h2>
+          <p className="text-gray-600 text-center mb-8 md:mb-12">Find the perfect saree for every occasion</p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {categories.map((category) => (
               <div
                 key={category.id}
                 onClick={() => handleNavigateToListingPage(category, "category")}
-                className="group cursor-pointer relative overflow-hidden rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 h-96"
+                className="group cursor-pointer relative overflow-hidden rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 h-64 md:h-96"
               >
                 <img
-                  src={shopimage}
+                  src={category.image}
                   alt={category.label}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
                 
                 <div className={`absolute inset-0 bg-gradient-to-b ${category.bgColor} opacity-60 transition-opacity duration-300 group-hover:opacity-75`} />
                 
-                <div className="absolute inset-0 p-8 flex flex-col justify-between text-white">
+                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between text-white">
                   <div>
-                    <h3 className="text-2xl font-bold mb-2">{category.label}</h3>
+                    <h3 className="text-xl md:text-2xl font-bold mb-2">{category.label}</h3>
                     <p className="text-sm opacity-90">{category.description}</p>
                   </div>
                   
@@ -218,12 +218,12 @@ const ShoppingHome = () => {
       <VideoCarousel />
 
       {/* Featured Products */}
-      <section className="py-20 bg-[#E6B0AA] text-[#4A2C2A] shadow-md rounded-xl">
+      <section className="py-10 md:py-20 bg-[#E6B0AA] text-[#4A2C2A] shadow-md rounded-xl">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-4">Featured Sarees</h2>
-          <p className="text-gray-600 text-center mb-12">Curated collection of our finest pieces</p>
+          <h2 className="text-2xl md:text-4xl font-bold text-center mb-4">Featured Sarees</h2>
+          <p className="text-gray-600 text-center mb-8 md:mb-12">Curated collection of our finest pieces</p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {productList?.map((product) => (
               <ShoppingProductTile
                 key={product.id}
@@ -237,7 +237,7 @@ const ShoppingHome = () => {
       </section>
 
       {/* Users Section */}
-      <FramerMotion className="py-20" />
+      <FramerMotion className="py-10 md:py-20" />
 
       {/* Product Details Dialog */}
       <ProductDetailsDialog

@@ -46,29 +46,28 @@ export default function VideoCarousel() {
   const getNextIndex = () => (currentIndex + 1) % videos.length;
 
   return (
-    <section className="relative bg-gradient-to-b from-gray-100 to-gray-300 py-20 overflow-hidden">
+    <section className="relative bg-gradient-to-b from-gray-100 to-gray-300 py-10 md:py-20 overflow-hidden">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">Featured Collections</h2>
-        <p className="text-gray-600 text-center mb-12">Experience our sarees in motion</p>
-        
+        <h2 className="text-2xl md:text-4xl font-bold text-center text-gray-800 mb-4">
+          Featured Collections
+        </h2>
+        <p className="text-gray-600 text-center mb-8 md:mb-12">
+          Experience our sarees in motion
+        </p>
+
         <div className="relative flex items-center justify-center w-full h-full">
-          {/* Previous Video */}
-          <div className="relative w-[20%] h-[60vh] transform -translate-x-8">
+          {/* Previous Video (Hidden on Mobile) */}
+          <div className="hidden md:block relative w-[20%] h-[40vh] md:h-[60vh] transform -translate-x-4 md:-translate-x-8">
             <video
               src={videos[getPrevIndex()]}
-              className="
-                w-full h-full object-cover rounded-2xl
-                opacity-50 blur-[2px]
-                transition-all duration-700
-                transform scale-95 hover:scale-100
-              "
+              className="w-full h-full object-cover rounded-2xl opacity-50 blur-[2px] transition-all duration-700 transform scale-95 hover:scale-100"
               muted
             />
             <div className="absolute inset-0 bg-black/20 rounded-2xl" />
           </div>
 
           {/* Main Video */}
-          <div className="relative w-[40%] h-[70vh] z-10 mx-8">
+          <div className="relative w-full md:w-[60%] h-[40vh] md:h-[70vh] z-10 mx-2 md:mx-8">
             <video
               ref={videoRef}
               key={videos[currentIndex]}
@@ -76,25 +75,17 @@ export default function VideoCarousel() {
               autoPlay
               muted
               loop
-              className="
-                w-full h-full object-cover rounded-2xl
-                shadow-lg shadow-gray-500/50
-                transition-all duration-700 ease-in-out
-                transform ${isTransitioning ? 'scale-95 opacity-80' : 'scale-100 opacity-100'}
-              "
+              className={`w-full h-full object-cover rounded-2xl shadow-lg shadow-gray-500/50 transition-all duration-700 ease-in-out transform ${
+                isTransitioning ? "scale-95 opacity-80" : "scale-100 opacity-100"
+              }`}
             />
           </div>
 
-          {/* Next Video */}
-          <div className="relative w-[20%] h-[60vh] transform translate-x-8">
+          {/* Next Video (Hidden on Mobile) */}
+          <div className="hidden md:block relative w-[20%] h-[40vh] md:h-[60vh] transform translate-x-4 md:translate-x-8">
             <video
               src={videos[getNextIndex()]}
-              className="
-                w-full h-full object-cover rounded-2xl
-                opacity-50 blur-[2px]
-                transition-all duration-700
-                transform scale-95 hover:scale-100
-              "
+              className="w-full h-full object-cover rounded-2xl opacity-50 blur-[2px] transition-all duration-700 transform scale-95 hover:scale-100"
               muted
             />
             <div className="absolute inset-0 bg-black/20 rounded-2xl" />
@@ -102,33 +93,23 @@ export default function VideoCarousel() {
 
           {/* Navigation Buttons */}
           <button
-            className="
-              absolute left-4 top-1/2 -translate-y-1/2
-              bg-gray-800/50 backdrop-blur-lg p-4 rounded-full
-              shadow-md hover:bg-gray-900/60
-              transition-all duration-300 ease-in-out
-              transform hover:scale-110
-              ${isTransitioning ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}
-            "
+            className={`absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-gray-800/50 backdrop-blur-lg p-2 md:p-4 rounded-full shadow-md hover:bg-gray-900/60 transition-all duration-300 ease-in-out transform hover:scale-110 ${
+              isTransitioning ? "opacity-50 cursor-not-allowed" : "opacity-100"
+            }`}
             onClick={prevVideo}
             disabled={isTransitioning}
           >
-            <ChevronLeft className="text-white w-6 h-6" />
+            <ChevronLeft className="text-white w-4 h-4 md:w-6 md:h-6" />
           </button>
 
           <button
-            className="
-              absolute right-4 top-1/2 -translate-y-1/2
-              bg-gray-800/50 backdrop-blur-lg p-4 rounded-full
-              shadow-md hover:bg-gray-900/60
-              transition-all duration-300 ease-in-out
-              transform hover:scale-110
-              ${isTransitioning ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}
-            "
+            className={`absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-gray-800/50 backdrop-blur-lg p-2 md:p-4 rounded-full shadow-md hover:bg-gray-900/60 transition-all duration-300 ease-in-out transform hover:scale-110 ${
+              isTransitioning ? "opacity-50 cursor-not-allowed" : "opacity-100"
+            }`}
             onClick={nextVideo}
             disabled={isTransitioning}
           >
-            <ChevronRight className="text-white w-6 h-6" />
+            <ChevronRight className="text-white w-4 h-4 md:w-6 md:h-6" />
           </button>
 
           {/* Video Indicators */}
@@ -136,10 +117,9 @@ export default function VideoCarousel() {
             {videos.map((_, index) => (
               <div
                 key={index}
-                className={`
-                  w-3 h-3 rounded-full transition-all duration-300
-                  ${index === currentIndex ? 'bg-gray-900 w-6' : 'bg-gray-500'}
-                `}
+                className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
+                  index === currentIndex ? "bg-gray-900 w-4 md:w-6" : "bg-gray-500"
+                }`}
               />
             ))}
           </div>

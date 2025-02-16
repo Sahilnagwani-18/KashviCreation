@@ -25,6 +25,8 @@
     "nodemon": "^3.1.4",
     "paypal-rest-sdk": "^1.8.1",
     "transport": "^0.0.3",
-    "transporter": "^0.0.1"
+    "transporter": "^0.0.1",
+    "twilio": "^5.4.4",
+    "validator": "^13.12.0"
   }
 }
