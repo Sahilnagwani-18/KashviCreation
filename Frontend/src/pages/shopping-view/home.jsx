@@ -131,7 +131,7 @@ const ShoppingHome = () => {
   return (
     <div className="flex flex-col min-h-screen  bg-[#FDF7E3] text-[#4A2C2A]">
       {/* Hero Section */}
-      <section className="relative h-[90vh] overflow-hidden">
+      <section className="relative h-[90vh] overflow-hidden mx-10">
         {featureImageList.map((slide, index) => (
           <div
             key={index}
@@ -163,13 +163,13 @@ const ShoppingHome = () => {
           onClick={prevSlide}
           className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full hover:bg-white"
         >
-          <ChevronLeft className="h-6 w-6" />
+          <ChevronLeft className="h-8 w-8" />
         </button>
         <button
           onClick={nextSlide}
           className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full hover:bg-white"
         >
-          <ChevronRight className="h-6 w-6" />
+          <ChevronRight className="h-8 w-8" />
         </button>
       </section>
 
@@ -211,7 +211,7 @@ const ShoppingHome = () => {
           </div>
         </div>
       </section>
-      <h1 className="text-4xl font-bold text-center mb-8">Gallery</h1>
+
       <Gallery/>
 
       {/* Video Gallery */}

@@ -11,22 +11,25 @@ const Gallery = () => {
   ];
 
   return (
-    <section className="py-12 bg-white">
+    <section className="py-12">
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap -mx-2">
+        {/* Gallery Title */}
+        <h1 className="text-4xl font-bold text-center mb-8">Gallery</h1>
+
+        <div className="flex flex-wrap -mx-2 ">
           {images.map((image) => (
             <div
               key={image.id}
               className={`w-full px-2 mb-4 ${image.width}`}
-              loading="lazy"
-              style={{ background: '#f0f0f0' }}
+              style={{ background: '#FDF7E3' }}
             >
               <div className="relative overflow-hidden rounded-lg shadow-lg">
                 <img
                   src={image.src}
                   alt={image.title}
                   className={`w-full ${image.height} object-cover`}
-                  loading="lazy" // Lazy loading for better performance
+                  loading="lazy" // Native lazy loading for performance
+                  srcSet={`${image.src} 1x, ${image.src}?w=500 2x`} // Optimize images for different screen resolutions
                 />
                 {/* Always Visible Text and Button */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6 bg-black bg-opacity-50">
@@ -35,8 +38,7 @@ const Gallery = () => {
                   <p className="text-white text-sm mt-2">{image.label}</p>
                   <a
                     href="http://localhost:5173/shop/listing"
-                    className="mt-4 inline-block bg-black  opacity-60 text-white px-6 py-2 rounded-md ml-auto mr-auto w-[200px] hover:opacity-100"
-                    
+                    className="mt-4 inline-block bg-black opacity-60 text-white px-6 py-2 rounded-md mx-auto w-[200px] hover:opacity-100"
                   >
                     SHOP NOW
                   </a>
