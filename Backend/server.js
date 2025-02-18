@@ -19,6 +19,7 @@ const shopOrderRouter = require("./routes/shop/order-routes");
 const shopSearchRouter = require("./routes/shop/search-routes");
 const shopReviewRouter = require("./routes/shop/review-routes");
 const storeRouter = require("./routes/store.router.js");
+const emailRouter = require("./routes/emailroutes.js");
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
 
@@ -32,41 +33,41 @@ mongoose
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// app.use(
-//   cors({
-//     origin: "/" ,
-//     methods: ["GET", "POST", "DELETE", "PUT"],
-//     allowedHeaders: [
-//       "Content-Type",
-//       "Authorization",
-//       "Cache-Control",
-//       "Expires",
-//       "Pragma",
-//     ],
-//     credentials: true,
-//   })
-// );
-
-const allowedOrigins = [
-  "https://your-production-domain.com",
-  "https://staging.your-domain.com",
-  "http://localhost:5173" // For development
-];
-
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "http://localhost:5173" ,
     methods: ["GET", "POST", "DELETE", "PUT"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Cache-Control",
+      "Expires",
+      "Pragma",
+    ],
+    credentials: true,
   })
 );
+
+// const allowedOrigins = [
+//   "https://your-production-domain.com",
+//   "https://staging.your-domain.com",
+//   "http://localhost:5173" // For development
+// ];
+
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     methods: ["GET", "POST", "DELETE", "PUT"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//     credentials: true
+//   })
+// );
 
 app.use(cookieParser());
 app.use(express.json());
@@ -81,6 +82,7 @@ app.use("/api/shop/order", shopOrderRouter);
 app.use("/api/shop/search", shopSearchRouter);
 app.use("/api/shop/review", shopReviewRouter);
 app.use('/api',storeRouter);
+app.use('/api',emailRouter);
 
 app.use("/api/common/feature", commonFeatureRouter);
 

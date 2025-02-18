@@ -27,6 +27,13 @@ import SearchProducts from "./pages/shopping-view/search";
 import FindStore from "./pages/FindStore";
 import "./App.css";
 import AboutUs from "./components/shopping-view/Aboutus";
+import TermsConditions from "./pages/shopping-view/terms";
+import PrivacyPolicy from "./components/shopping-view/privacy";
+import ContactUs from "./pages/shopping-view/contact-us";
+import Company from "./pages/shopping-view/company";
+import Blog from "./pages/shopping-view/blog";
+import BulkSales from "./pages/shopping-view/bulksales";
+import Influencers from "./pages/shopping-view/influencers";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -96,7 +103,13 @@ function App() {
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="store" element={<FindStore />} />
           <Route path="about-us" element={<AboutUs />} />
-          
+          <Route path="/shop/terms-condition" element={<TermsConditions />} />
+          <Route path="/shop/contact-us" element={<ContactUs />} />
+          <Route path="/shop/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/shop/company" element={<Company />} />
+          <Route path="/shop/blog" element={<Blog />} />
+          <Route path="/shop/bulk-orders" element={<BulkSales />} />
+          <Route path="/shop/influencers" element={<Influencers />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="search" element={<SearchProducts />} />
         </Route>

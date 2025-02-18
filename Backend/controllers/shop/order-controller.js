@@ -187,7 +187,7 @@ const createOrder = async (req, res) => {
       success: true,
       message: "Order created successfully. Invoice sent to email.",
       orderId: newlyCreatedOrder._id,
-      invoicePath: newlyCreatedOrder.invoicePath, // Return the invoice path in the response
+      invoicePath: newlyCreatedOrder.invoicePath, 
     });
   } catch (e) {
     console.log(e);
