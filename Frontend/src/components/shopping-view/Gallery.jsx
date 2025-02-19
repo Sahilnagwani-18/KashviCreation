@@ -11,10 +11,10 @@ const Gallery = () => {
   ];
 
   return (
-    <section className="py-12">
+    <section className="py-12 bg-[#FAF3E0]">
       <div className="container mx-auto px-4">
         {/* Gallery Title */}
-        <h1 className="text-4xl font-bold text-center mb-8">Gallery</h1>
+        <h1 className="text-5xl font-extrabold text-center text-[6B4F98] uppercase tracking-wide mb-6">Gallery</h1>
 
         <div className="flex flex-wrap -mx-2 ">
           {images.map((image) => (
