@@ -143,7 +143,7 @@ const ShoppingHome = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#F8F0F5] to-[#FDF6F9] text-[#4A2C2A]">
       {/* Hero Section */}
-      <section className="relative h-[50vh] md:h-[90vh] overflow-hidden mx-4 md:mx-10">
+      <section className="relative h-[50vh] md:h-[90vh] overflow-hidden ">
         {featureImageList.map((slide, index) => (
           <div
             key={index}
