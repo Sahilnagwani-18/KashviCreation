@@ -2,9 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-
+const path = require("path");
 const dotenv = require("dotenv");
-
 
 dotenv.config();
 
@@ -23,11 +22,9 @@ const emailRouter = require("./routes/emailroutes.js");
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
 
-require("dotenv").config();
 console.log("Allowed Origin:", process.env.FRONTEND_URL);
 
-
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";  
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
 mongoose
   .connect(`${MONGODB_URI}`)
   .then(() => console.log("✅ Database Connected Successfully"))
@@ -36,6 +33,7 @@ mongoose
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// CORS Configuration
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
@@ -51,10 +49,10 @@ app.use(
   })
 );
 
-
-
 app.use(cookieParser());
 app.use(express.json());
+
+// API Routes
 app.use("/api/auth", authRouter);
 app.use("/api/admin/products", adminProductsRouter);
 app.use("/api/admin/orders", adminOrderRouter);
@@ -65,13 +63,22 @@ app.use("/api/shop/address", shopAddressRouter);
 app.use("/api/shop/order", shopOrderRouter);
 app.use("/api/shop/search", shopSearchRouter);
 app.use("/api/shop/review", shopReviewRouter);
-app.use('/api',storeRouter);
-app.use('/api',emailRouter);
+app.use("/api", storeRouter);
+app.use("/api", emailRouter);
 
 app.use("/api/common/feature", commonFeatureRouter);
 
-app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));
+// Serve static frontend files from "dist"
+app.use(express.static(path.join(__dirname, "dist")));
 
-app.get("/",(req,res)=>{
+// Serve React app for all unknown routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
+// Test route
+app.get("/", (req, res) => {
   res.send("Hello");
-})
+});
+
+app.listen(PORT, () => console.log(`🚀 Server is now running on port ${PORT}`));
