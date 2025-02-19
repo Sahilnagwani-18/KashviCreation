@@ -23,7 +23,7 @@ const storeRouter = require("./routes/store.router.js");
 const commonFeatureRouter = require("./routes/common/feature-routes");
 
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";  
+const MONGODB_URI = process.env.MONGODB_URI ;  
 mongoose
   .connect(`${MONGODB_URI}/Kashvi5`)
   .then(() => console.log("✅ Database Connected Successfully"))

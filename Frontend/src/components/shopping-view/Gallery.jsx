@@ -16,29 +16,29 @@ const Gallery = () => {
         {/* Gallery Title */}
         <h1 className="text-4xl font-bold text-center mb-8">Gallery</h1>
 
-        <div className="flex flex-wrap -mx-2 ">
+        <div className="flex flex-wrap -mx-2">
           {images.map((image) => (
             <div
               key={image.id}
               className={`w-full px-2 mb-4 ${image.width}`}
               style={{ background: '#FDF7E3' }}
             >
-              <div className="relative overflow-hidden rounded-lg shadow-lg">
+              <div className="relative overflow-hidden rounded-lg shadow-lg group">
                 <img
                   src={image.src}
                   alt={image.title}
-                  className={`w-full ${image.height} object-cover`}
-                  loading="lazy" // Native lazy loading for performance
-                  srcSet={`${image.src} 1x, ${image.src}?w=500 2x`} // Optimize images for different screen resolutions
+                  className={`w-full ${image.height} object-cover transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:brightness-110`}
+                  loading="lazy"
+                  srcSet={`${image.src} 1x, ${image.src}?w=500 2x`}
                 />
-                {/* Always Visible Text and Button */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 bg-black bg-opacity-50">
+                {/* Shadow Layer */}
+                <div className="absolute inset-0 flex flex-col justify-end p-6 bg-black bg-opacity-50 transition-transform duration-500 ease-in-out transform -translate-y-full group-hover:translate-y-0">
                   <h2 className="text-white text-2xl font-bold">{image.title}</h2>
                   <h3 className="text-gray-300 text-lg">{image.category}</h3>
                   <p className="text-white text-sm mt-2">{image.label}</p>
                   <a
                     href="http://localhost:5173/shop/listing"
-                    className="mt-4 inline-block bg-black opacity-60 text-white px-6 py-2 rounded-md mx-auto w-[200px] hover:opacity-100"
+                    className="mt-4 inline-block bg-black opacity-60 text-white px-6 py-2 rounded-md mx-auto w-[200px] hover:opacity-100 transition-opacity duration-300 ease-in-out"
                   >
                     SHOP NOW
                   </a>
