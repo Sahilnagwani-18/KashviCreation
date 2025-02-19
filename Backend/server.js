@@ -23,9 +23,6 @@ const emailRouter = require("./routes/emailroutes.js");
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
 
-require("dotenv").config();
-console.log("Allowed Origin:", process.env.FRONTEND_URL);
-
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";  
 mongoose
@@ -38,7 +35,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: "http://localhost:5173" ,
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
       "Content-Type",
@@ -51,7 +48,25 @@ app.use(
   })
 );
 
+const allowedOrigins = [
+ "https://new-repo-f8gj.vercel.app/",
+  "http://localhost:5173" // For development
+];
 
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "DELETE", "PUT"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
+  })
+);
 
 app.use(cookieParser());
 app.use(express.json());
@@ -71,7 +86,3 @@ app.use('/api',emailRouter);
 app.use("/api/common/feature", commonFeatureRouter);
 
 app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));
-
-app.get("/",(req,res)=>{
-  res.send("Hello");
-})
