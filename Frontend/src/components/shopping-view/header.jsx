@@ -130,7 +130,7 @@ function HeaderRightContent() {
 
 function ShoppingHeader() {
   return (
-    <header className="sticky top-0 z-40 h-20 w-full border-b bg-[#800020] text-[#FAF3E0] shadow-lg">
+    <header className="sticky top-0 z-40 h-20 w-full border-b bg-gradient-to-r from-[#4A154B] to-[#6D4A72] text-[#FAF3E0] shadow-lg">
       <div className="flex h-20 items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link
