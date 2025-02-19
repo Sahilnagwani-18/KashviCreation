@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
-import Img from "@/assets/Img.jpg";
+import Img from "../../assets/authImg.jpg";
 
 function AuthLayout() {
   return (
@@ -14,12 +14,12 @@ function AuthLayout() {
           className="absolute inset-0 w-full h-full object-cover"
         />
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-md space-y-6 text-center text-primary-foreground relative z-10"
         >
-          <h1 className="text-4xl font-extrabold tracking-tight text-white drop-shadow-lg">
+          <h1 className="text-4xl font-extrabold tracking-tight mt-80 text-white drop-shadow-lg">
             KASHVI CREATION
           </h1>
           <p className="text-lg text-gray-200">"प्रेम और विश्वास का अनोखा संगम"</p>
