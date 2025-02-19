@@ -35,7 +35,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "http://localhost:5173" ,
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
       "Content-Type",
@@ -48,26 +48,7 @@ app.use(
   })
 );
 
-// const allowedOrigins = [
-//   "https://your-production-domain.com",
-//   "https://staging.your-domain.com",
-//   "http://localhost:5173" // For development
-// ];
 
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//     methods: ["GET", "POST", "DELETE", "PUT"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//     credentials: true
-//   })
-// );
 
 app.use(cookieParser());
 app.use(express.json());

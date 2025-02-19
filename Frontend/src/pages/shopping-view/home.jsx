@@ -45,7 +45,7 @@ const categories = [
     label: "Polyester Sarees", 
     description: "Durable and easy-care polyester sarees",
     image: "/images/polyester-saree.jpg",
-    bgColor: "from-orange-500 to-amber-500"
+    bgColor: "from-[#4A154B] to-amber-500"
   },
   { 
     id: "nylon", 

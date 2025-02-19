@@ -53,7 +53,7 @@
 //             }
 //             value={value}
 //           >
-//             <SelectTrigger className="w-full p-3 focus:ring-2 focus:ring-orange-500 transition-all duration-300">
+//             <SelectTrigger className="w-full p-3 focus:ring-2 focus:ring-[#4A154B] transition-all duration-300">
 //               <SelectValue placeholder={getControlItem.label} />
 //             </SelectTrigger>
 //             <SelectContent>
@@ -79,7 +79,7 @@
 //             placeholder={getControlItem.placeholder}
 //             id={getControlItem.id}
 //             value={value}
-//             className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-orange-500 transition-all duration-300"
+//             className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-[#4A154B] transition-all duration-300"
 //             onChange={(event) =>
 //               setFormData({
 //                 ...formData,
@@ -137,7 +137,7 @@
 //         whileTap={{ scale: 0.95 }}
 //         disabled={isBtnDisabled}
 //         type="submit"
-//         className="mt-4 w-full py-2 text-white bg-orange-400 rounded-lg shadow-md hover:bg-orange-500 focus:ring-2 focus:ring-orange-400 transition-all duration-300"
+//         className="mt-4 w-full py-2 text-white bg-orange-400 rounded-lg shadow-md hover:bg-[#4A154B] focus:ring-2 focus:ring-orange-400 transition-all duration-300"
 //       >
 //         {buttonText || "Submit"}
 //       </motion.button>
@@ -204,7 +204,7 @@ function CommonForm({
             }
             value={value}
           >
-            <SelectTrigger className="w-full p-3 focus:ring-2 focus:ring-orange-500 transition-all duration-300">
+            <SelectTrigger className="w-full p-3 focus:ring-2 focus:ring-[#4A154B] transition-all duration-300">
               <SelectValue placeholder={getControlItem.label} />
             </SelectTrigger>
             <SelectContent>
@@ -230,7 +230,7 @@ function CommonForm({
             placeholder={getControlItem.placeholder}
             id={getControlItem.id}
             value={value}
-            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-orange-500 transition-all duration-300"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-[#4A154B] transition-all duration-300"
             onChange={(event) =>
               setFormData({
                 ...formData,
@@ -285,7 +285,7 @@ function CommonForm({
         whileTap={{ scale: 0.95 }}
         disabled={isBtnDisabled}
         type="submit"
-        className="mt-4 w-full py-2 text-white bg-orange-400 rounded-lg shadow-md hover:bg-orange-500 focus:ring-2 focus:ring-orange-400 transition-all duration-300"
+        className="mt-4 w-full py-2 text-white bg-orange-400 rounded-lg shadow-md hover:bg-[#4A154B] focus:ring-2 focus:ring-orange-400 transition-all duration-300"
       >
         {buttonText || "Submit"}
       </motion.button>

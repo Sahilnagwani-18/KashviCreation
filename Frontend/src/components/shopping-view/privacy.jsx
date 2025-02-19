@@ -4,7 +4,7 @@ import { EnvelopeIcon, ShieldCheckIcon, LockClosedIcon, DocumentTextIcon } from 
 const privacySections = [
   {
     title: "Data Collection & Usage",
-    icon: <DocumentTextIcon className="w-10 h-10 text-[#6D4A72]" />, // Lightish maroon
+    icon: <DocumentTextIcon className="w-10 h-10 text-[#4A154B]" />, // Lightish maroon
     content: `We collect user data to improve our services and provide personalized experiences. Data collected includes:
     - Personal Information: Name, Email, Phone Number
     - Payment Details: Encrypted & Secure
@@ -16,7 +16,7 @@ const privacySections = [
   },
   {
     title: "Data Protection & Security",
-    icon: <LockClosedIcon className="w-10 h-10 text-[#6D4A72]" />, // Lightish maroon
+    icon: <LockClosedIcon className="w-10 h-10 text-[#4A154B]" />, // Lightish maroon
     content: `We use top-tier security measures to protect user data:
     - AES-256 Encryption: For all transactions
     - Secure Cloud Storage: With end-to-end encryption
@@ -28,7 +28,7 @@ const privacySections = [
   },
   {
     title: "User Rights & Control",
-    icon: <ShieldCheckIcon className="w-10 h-10 text-[#6D4A72]" />, // Lightish maroon
+    icon: <ShieldCheckIcon className="w-10 h-10 text-[#4A154B]" />, // Lightish maroon
     content: `You have full control over your data. You can:
     - Request Access: To your data at any time
     - Update or Correct: Personal details
@@ -40,7 +40,7 @@ const privacySections = [
   },
   {
     title: "Cookies & Tracking Policy",
-    icon: <DocumentTextIcon className="w-10 h-10 text-[#6D4A72]" />, // Lightish maroon
+    icon: <DocumentTextIcon className="w-10 h-10 text-[#4A154B]" />, // Lightish maroon
     content: `Our platform uses cookies to enhance user experience:
     - Essential Cookies: Required for website functionality
     - Analytical Cookies: Used for performance tracking (Google Analytics)
@@ -62,11 +62,11 @@ export default function PrivacyPolicy() {
           className="text-center mb-12 lg:mb-16"
         >
           <h1 className="text-4xl lg:text-5xl font-bold text-[#4A154B] mb-4">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#6D4A72] to-[#4A154B]">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#4A154B] to-[#4A154B]">
               Privacy Policy
             </span>
           </h1>
-          <p className="text-lg lg:text-xl text-[#6D4A72] max-w-2xl mx-auto">
+          <p className="text-lg lg:text-xl text-[#4A154B] max-w-2xl mx-auto">
             Your Data, Our Responsibility – Committed to Transparent and Secure Data Practices
           </p>
         </motion.header>
@@ -80,7 +80,7 @@ export default function PrivacyPolicy() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="group relative bg-white rounded-xl lg:rounded-2xl p-8 lg:p-10 shadow-md hover:shadow-lg transition-all duration-300 border-l-4 border-[#6D4A72]"
+              className="group relative bg-white rounded-xl lg:rounded-2xl p-8 lg:p-10 shadow-md hover:shadow-lg transition-all duration-300 border-l-4 border-[#4A154B]"
             >
               <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-8">
                 <div className="p-4 bg-[#F8F0F5] rounded-lg lg:shrink-0">
@@ -94,7 +94,7 @@ export default function PrivacyPolicy() {
                     <p className="text-gray-600 whitespace-pre-line leading-relaxed">
                       {section.content}
                     </p>
-                    <p className="text-[#6D4A72] font-medium whitespace-pre-line">
+                    <p className="text-[#4A154B] font-medium whitespace-pre-line">
                       {section.additionalContent}
                     </p>
                   </div>
@@ -116,14 +116,14 @@ export default function PrivacyPolicy() {
             <h3 className="text-2xl lg:text-3xl font-bold text-[#4A154B] mb-4">
               Privacy Guardians
             </h3>
-            <p className="text-lg text-[#6D4A72] mb-6">
+            <p className="text-lg text-[#4A154B] mb-6">
               Our dedicated team is always available to address your data concerns
             </p>
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href="mailto:privacy@kashvicreation.com"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#6D4A72] to-[#4A154B] text-white rounded-full hover:shadow-lg transition-all"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#4A154B] to-[#4A154B] text-white rounded-full hover:shadow-lg transition-all"
             >
               <EnvelopeIcon className="w-5 h-5" />
               <span className="font-medium">Reach Our Experts</span>

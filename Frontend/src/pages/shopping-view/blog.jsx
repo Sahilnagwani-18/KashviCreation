@@ -20,7 +20,7 @@ const blogPosts = [
     - Zero-waste production techniques
     - Ethical supply chain management
     - Circular fashion initiatives`,
-    icon: <GlobeAltIcon  className="w-8 h-8 text-[#6D4A72]" />,
+    icon: <GlobeAltIcon  className="w-8 h-8 text-[#4A154B]" />,
     readTime: "8 min read"
   },
   {
@@ -32,7 +32,7 @@ const blogPosts = [
     • Virtual try-on experiences
     • Smart inventory management
     • Personalized styling algorithms`,
-    icon: <CpuChipIcon className="w-8 h-8 text-[#6D4A72]" />,
+    icon: <CpuChipIcon className="w-8 h-8 text-[#4A154B]" />,
     readTime: "10 min read"
   },
   {
@@ -44,7 +44,7 @@ const blogPosts = [
     ✓ Seasonless clothing strategies
     ✓ Quality over quantity philosophy
     ✓ Sustainable closet management`,
-    icon: <BookOpenIcon className="w-8 h-8 text-[#6D4A72]" />,
+    icon: <BookOpenIcon className="w-8 h-8 text-[#4A154B]" />,
     readTime: "6 min read"
   }
 ];
@@ -60,7 +60,7 @@ export default function Blog() {
         className="text-center mb-12 lg:mb-16"
       >
         <h1 className="text-4xl lg:text-6xl font-bold mb-4">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#6D4A72] to-[#4A154B]">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#4A154B] to-[#4A154B]">
             Kashvi Chronicles
           </span>
         </h1>
@@ -68,7 +68,7 @@ export default function Blog() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="text-lg lg:text-xl text-[#6D4A72] max-w-3xl mx-auto leading-relaxed"
+          className="text-lg lg:text-xl text-[#4A154B] max-w-3xl mx-auto leading-relaxed"
         >
           Insights, Innovations, and Inspirations in Modern Fashion
         </motion.p>
@@ -85,14 +85,14 @@ export default function Blog() {
           <SparklesIcon className="w-12 h-12 text-[#4A154B]" />
           <div>
             <h2 className="text-2xl lg:text-3xl font-bold text-[#4A154B]">Editor's Pick</h2>
-            <p className="text-[#6D4A72]">Most Read Article of the Month</p>
+            <p className="text-[#4A154B]">Most Read Article of the Month</p>
           </div>
         </div>
         <div className="space-y-6">
           <h3 className="text-xl lg:text-2xl font-bold text-[#4A154B]">
             Revolutionizing Textile Production: Our Sustainable Journey
           </h3>
-          <div className="text-[#6D4A72] space-y-4">
+          <div className="text-[#4A154B] space-y-4">
             <p>Discover how we've achieved:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>78% reduction in water consumption</li>
@@ -100,7 +100,7 @@ export default function Blog() {
               <li>Closed-loop recycling system</li>
             </ul>
           </div>
-          <div className="flex items-center gap-4 text-[#6D4A72]">
+          <div className="flex items-center gap-4 text-[#4A154B]">
             <CalendarIcon className="w-5 h-5" />
             <span>March 1, 2024</span>
             <span>•</span>
@@ -118,7 +118,7 @@ export default function Blog() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
             viewport={{ once: true }}
-            className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 group border-l-4 border-[#6D4A72]"
+            className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 group border-l-4 border-[#4A154B]"
           >
             <div className="flex items-center gap-4 mb-6">
               <div className="p-3 bg-[#F8F0F5] rounded-lg">
@@ -126,7 +126,7 @@ export default function Blog() {
               </div>
               <div>
                 <h3 className="text-lg font-bold text-[#4A154B]">{post.category}</h3>
-                <p className="text-sm text-[#6D4A72]">{post.date}</p>
+                <p className="text-sm text-[#4A154B]">{post.date}</p>
               </div>
             </div>
             
@@ -134,7 +134,7 @@ export default function Blog() {
               {post.title}
             </h4>
             
-            <div className="text-[#6D4A72] whitespace-pre-line leading-relaxed mb-6">
+            <div className="text-[#4A154B] whitespace-pre-line leading-relaxed mb-6">
               {post.excerpt}
             </div>
             
@@ -146,7 +146,7 @@ export default function Blog() {
               <span>Continue Reading</span>
             </motion.div>
             
-            <div className="mt-4 pt-4 border-t border-[#F8F0F5] text-sm text-[#6D4A72]">
+            <div className="mt-4 pt-4 border-t border-[#F8F0F5] text-sm text-[#4A154B]">
               {post.readTime} • 2.4k views
             </div>
           </motion.article>
@@ -158,7 +158,7 @@ export default function Blog() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="max-w-4xl mx-auto mt-20 bg-gradient-to-r from-[#4A154B] to-[#6D4A72] rounded-2xl p-8 lg:p-12 text-center text-white"
+        className="max-w-4xl mx-auto mt-20 bg-gradient-to-r from-[#4A154B] to-[#4A154B] rounded-2xl p-8 lg:p-12 text-center text-white"
       >
         <div className="max-w-2xl mx-auto space-y-6">
           <h2 className="text-2xl lg:text-3xl font-bold">Stay Informed</h2>

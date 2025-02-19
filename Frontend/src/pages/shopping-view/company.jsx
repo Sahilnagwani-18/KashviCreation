@@ -5,7 +5,7 @@ import { BuildingLibraryIcon, UsersIcon, HeartIcon, ChartBarIcon, GlobeAltIcon, 
 const companySections = [
   {
     title: "Our Heritage",
-    icon: <BuildingLibraryIcon className="w-10 h-10 text-[#6D4A72]" />,
+    icon: <BuildingLibraryIcon className="w-10 h-10 text-[#4A154B]" />,
     content: `Founded in 2015, Kashvi Creations began as a small boutique in Mumbai. Today we're a global lifestyle brand impacting millions:`,
     stats: [
       { value: "500+", label: "International Stores" },
@@ -28,7 +28,7 @@ export default function Company() {
         className="text-center mb-12 lg:mb-16"
       >
         <h1 className="text-4xl lg:text-6xl font-bold mb-4">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#6D4A72] to-[#4A154B]">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#4A154B] to-[#4A154B]">
             Our Legacy
           </span>
         </h1>
@@ -36,7 +36,7 @@ export default function Company() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg lg:text-xl text-[#6D4A72] max-w-3xl mx-auto leading-relaxed"
+          className="text-lg lg:text-xl text-[#4A154B] max-w-3xl mx-auto leading-relaxed"
         >
           Crafting Timeless Elegance Through Ethical Innovation | Global Presence with Local Heart
         </motion.p>
@@ -50,7 +50,7 @@ export default function Company() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: index * 0.15 }}
             viewport={{ once: true, margin: "0px 0px -150px 0px" }}
-            className="group relative bg-white rounded-2xl lg:rounded-3xl p-8 lg:p-12 shadow-xl hover:shadow-2xl transition-all duration-500 border-l-8 border-[#6D4A72] hover:border-[#4A154B]"
+            className="group relative bg-white rounded-2xl lg:rounded-3xl p-8 lg:p-12 shadow-xl hover:shadow-2xl transition-all duration-500 border-l-8 border-[#4A154B] hover:border-[#4A154B]"
           >
             <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
               <motion.div 
@@ -75,14 +75,14 @@ export default function Company() {
                       className="bg-[#FDF6F9] p-4 rounded-xl text-center border-2 border-[#F8F0F5]"
                     >
                       <div className="text-2xl lg:text-3xl font-bold text-[#4A154B]">{stat.value}</div>
-                      <div className="text-sm lg:text-base text-[#6D4A72] mt-1">{stat.label}</div>
+                      <div className="text-sm lg:text-base text-[#4A154B] mt-1">{stat.label}</div>
                     </motion.div>
                   ))}
                 </div>
 
                 <motion.p 
                   whileHover={{ scale: 1.02 }}
-                  className="text-lg text-[#6D4A72] leading-relaxed border-l-4 border-[#4A154B] pl-4 italic"
+                  className="text-lg text-[#4A154B] leading-relaxed border-l-4 border-[#4A154B] pl-4 italic"
                 >
                   {section.additionalContent}
                 </motion.p>
@@ -96,7 +96,7 @@ export default function Company() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
-          className="bg-gradient-to-r from-[#4A154B] to-[#6D4A72] rounded-3xl p-8 lg:p-12 text-white"
+          className="bg-gradient-to-r from-[#4A154B] to-[#4A154B] rounded-3xl p-8 lg:p-12 text-white"
         >
           <div className="flex items-center gap-6 mb-8">
             <GlobeAltIcon className="w-12 h-12 text-white" />

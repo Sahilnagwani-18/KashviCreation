@@ -18,7 +18,7 @@ function ShoppingProductTile({ product, handleGetProductDetails, handleAddtoCart
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.3 }}
-      className="relative w-full max-w-sm mx-auto transform overflow-hidden rounded-lg shadow-lg bg-[#FFDAB9] text-[#4A2C2A] border border-[#E1C699] hover:shadow-xl transition-all duration-300"
+      className="relative w-full max-w-sm mx-auto transform overflow-hidden rounded-lg shadow-lg bg-[#faf8fa] text-[#4A2C2A] border border-[#E1C699] hover:shadow-xl transition-all duration-300"
     >
       <div
         className="relative cursor-pointer"
@@ -60,7 +60,7 @@ function ShoppingProductTile({ product, handleGetProductDetails, handleAddtoCart
           {product?.totalStock === 0 ? (
             <Badge className="absolute top-2 left-2 bg-red-500 text-white">Out Of Stock</Badge>
           ) : product?.totalStock < 10 ? (
-            <Badge className="absolute top-2 left-2 bg-orange-500 text-white">
+            <Badge className="absolute top-2 left-2 bg-[#4A154B] text-white">
               Only {product?.totalStock} left!
             </Badge>
           ) : product?.salePrice > 0 ? (

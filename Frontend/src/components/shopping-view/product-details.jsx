@@ -1,4 +1,4 @@
-import "./product-details.css";
+
 import { StarIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
@@ -160,7 +160,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           {/* Price Section */}
           <div className="flex items-center justify-between">
             <p
-              className={`text-3xl font-bold text-orange-500 ${
+              className={`text-3xl font-bold text-[#4A154B] ${
                 productDetails?.salePrice > 0 ? "line-through" : ""
               } transition-colors duration-300`}
             >
@@ -191,7 +191,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               </Button>
             ) : (
               <Button
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+                className="w-full bg-[#4A154B] hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
                 onClick={() =>
                   handleAddToCart(
                     productDetails?._id,
@@ -258,12 +258,12 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 value={reviewMsg}
                 onChange={(event) => setReviewMsg(event.target.value)}
                 placeholder="Write a review..."
-                className="transition-all duration-300 ease-in-out focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                className="transition-all duration-300 ease-in-out focus:ring-2 focus:ring-[#4A154B] focus:border-[#4A154B]"
               />
               <Button
                 onClick={handleAddReview}
                 disabled={reviewMsg.trim() === ""}
-                className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+                className="bg-[#4A154B] hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
               >
                 Submit
               </Button>
