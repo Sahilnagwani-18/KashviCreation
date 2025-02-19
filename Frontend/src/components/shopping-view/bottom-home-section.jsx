@@ -62,14 +62,14 @@ const BottomSection = () => {
         {counterData.map((data, index) => (
           <motion.div
           key={index}
-          className="pt-6 md:pt-8 h-40 md:h-48 w-40 md:w-56 bg-white border-amber-200 border-4 rounded-3xl shadow-xl text-2xl md:text-4xl font-bold text-amber-600 flex items-center justify-center flex-col"
-          initial={{ scale: 0, opacity: 0 }}
+          className="pt-6 md:pt-4 h-40 md:h-48 w-40 md:w-56 bg-white border-[#E2D4F2] border-4 rounded-3xl shadow-xl text-2xl md:text-4xl font-bold text-[#9B4D96] flex items-center justify-center flex-col"
+          initial={{ scale: 0, opacity: 0 }}  
           whileInView={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, delay: data.delay }}
           viewport={{ once: true }}
         >
           <div className="text-center">
-            <Counter end={data.end} duration={3} startCounting={startCounting} /> +
+            <Counter end={data.end} duration={2} startCounting={startCounting} /> +
           </div>
           <div className="text-center text-2xl ">{data.label}</div>
         </motion.div>
@@ -87,7 +87,7 @@ const BottomSection = () => {
           viewport={{ once: true }}
         >
           <div className="w-full md:w-1/2 text-left">
-            <h2 className="text-2xl md:text-4xl font-bold text-amber-600 mb-4">
+            <h2 className="text-2xl md:text-4xl font-bold text-[#6A1B4C] mb-4">
             Kashvi Collection: Timeless Elegance
             </h2>
             <p className="text-gray-700 text-base md:text-lg">
@@ -97,7 +97,7 @@ const BottomSection = () => {
             </p>
             <button 
               onClick={() => handleClick("/shop/about-us")}
-              className="mt-4 md:mt-6 px-4 md:px-6 py-2 md:py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition"
+              className="mt-4 md:mt-6 px-4 md:px-6 py-2 md:py-3 bg-[#9B4D96] text-[#F8F0F5] rounded-lg hover:bg-[#6A1B4C] transition"
             >
               Learn More
             </button>
@@ -120,7 +120,7 @@ const BottomSection = () => {
           viewport={{ once: true }}
         >
           <div className="w-full md:w-1/2 text-left">
-            <h2 className="text-2xl md:text-4xl font-bold text-amber-600 mb-4">
+            <h2 className="text-2xl md:text-4xl font-bold text-[#6A1B4C] mb-4">
               Why Choose Kashvi Creation?
             </h2>
             <p className="text-gray-700 text-base md:text-lg">
@@ -128,7 +128,7 @@ const BottomSection = () => {
               Whether you're looking for bridal elegance, festive charm, or everyday grace, we have
               something special for you. Our sarees are a celebration of tradition and modernity. 
             </p>
-            <button className="mt-4 md:mt-6 px-4 md:px-6 py-2 md:py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+            <button className="mt-4 md:mt-6 px-4 md:px-6 py-2 md:py-3 bg-[#9B4D96] text-[#F8F0F5] rounded-lg hover:bg-[#6A1B4C] transition">
               Our Services
             </button>
           </div>
@@ -150,7 +150,7 @@ const BottomSection = () => {
           viewport={{ once: true }}
         >
           <div className="w-full md:w-1/2 text-left">
-            <h2 className="text-2xl md:text-4xl font-bold text-amber-600 mb-4">
+            <h2 className="text-2xl md:text-4xl font-bold text-[#6A1B4C] mb-4">
               Our Promise
             </h2>
             <p className="text-gray-700 text-base md:text-lg">
@@ -158,7 +158,7 @@ const BottomSection = () => {
               experience. Our sarees are curated to reflect the richness of Indian heritage while
               embracing modern trends. We are committed to providing you with the best.
             </p>
-            <button className="mt-4 md:mt-6 px-4 md:px-6 py-2 md:py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+            <button className="mt-4 md:mt-6 px-4 md:px-6 py-2 md:py-3 bg-[#9B4D96] text-[#F8F0F5] text-white rounded-lg hover:bg-[#6A1B4C] transition">
               Contact Us
             </button>
           </div>

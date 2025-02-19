@@ -16,43 +16,55 @@ import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import BottomSection from "@/components/shopping-view/bottom-home-section";
 import Gallery from "@/components/shopping-view/Gallery";
 import VideoCarousel from '@/components/shopping-view/VideoGallery';
-import shopimage from "@/assets/Shop.png";
+import silkSaree from "../../assets/exploreSarees/silk-saree.jpg";
+import woolSaree from "../../assets/exploreSarees/wool-saree.jpg";
+import cottonSaree from "../../assets/exploreSarees/cotton-saree.jpg";
+import allSaree from "../../assets/Shop.png";
+import nylonSaree from "../../assets/exploreSarees/nylon-saree.jpg";
+import polyesterSaree from "../../assets/exploreSarees/all-saree.jpg";
 
 const categories = [
   { 
     id: "silk", 
     label: "Silk Sarees", 
     description: "Luxurious silk sarees for royal occasions",
-    image: shopimage,
+    image: silkSaree,
     bgColor: "from-purple-500 to-pink-500"
   },
   { 
     id: "wool", 
     label: "Woolen Sarees", 
     description: "Warm and elegant woolen sarees",
-    image: "/images/wool-saree.jpg",
+    image: woolSaree,
     bgColor: "from-blue-500 to-indigo-500"
   },
   { 
     id: "cotton", 
     label: "Cotton Sarees", 
     description: "Comfortable cotton sarees for daily wear",
-    image: "/images/cotton-saree.jpg",
+    image: cottonSaree,
     bgColor: "from-green-500 to-emerald-500"
   },
   { 
     id: "polyester", 
     label: "Polyester Sarees", 
     description: "Durable and easy-care polyester sarees",
-    image: "/images/polyester-saree.jpg",
+    image: polyesterSaree,
     bgColor: "from-[#4A154B] to-amber-500"
   },
   { 
     id: "nylon", 
     label: "Nylon Sarees", 
     description: "Lightweight and quick-drying nylon sarees",
-    image: "",
+    image: nylonSaree,
     bgColor: "from-red-500 to-rose-500"
+  },
+  {
+    id: "all", 
+    label: "All Products", 
+    description: "Browse all our sarees",
+    image: allSaree,
+    bgColor: "from-gray-400 to-gray-600"
   },
 ];
 
@@ -174,32 +186,32 @@ const ShoppingHome = () => {
       </section>
 
       {/* Categories Section */}
-      <section className="py-10 md:py-20 bg-white">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-4xl font-bold text-center mb-4">Explore Our Saree Collections</h2>
           <p className="text-gray-600 text-center mb-8 md:mb-12">Find the perfect saree for every occasion</p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {categories.map((category) => (
               <div
                 key={category.id}
-                onClick={() => handleNavigateToListingPage(category, "category")}
+                onClick={() => handleNavigateToListingPage(category, category.id === 'all' ? '' : 'category')}
                 className="group cursor-pointer relative overflow-hidden rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 h-64 md:h-96"
               >
                 <img
-                  src={category.image}
+                  src={category.image || "/images/default-saree.jpg"} // Default image if no category image
                   alt={category.label}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
-                
+
                 <div className={`absolute inset-0 bg-gradient-to-b ${category.bgColor} opacity-60 transition-opacity duration-300 group-hover:opacity-75`} />
-                
+
                 <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between text-white">
                   <div>
                     <h3 className="text-xl md:text-2xl font-bold mb-2">{category.label}</h3>
                     <p className="text-sm opacity-90">{category.description}</p>
                   </div>
-                  
+
                   <div className="transform translate-y-8 transition-transform duration-300 group-hover:translate-y-0 opacity-0 group-hover:opacity-100">
                     <Button className="bg-white text-black hover:bg-gray-200">
                       Explore Collection
@@ -212,27 +224,34 @@ const ShoppingHome = () => {
         </div>
       </section>
 
+
       <Gallery/>
 
       {/* Video Gallery */}
       <VideoCarousel />
 
       {/* Featured Products */}
-      <section className="py-10 md:py-20 bg-[#E6B0AA] text-[#4A2C2A] shadow-md rounded-xl">
+      <section className="py-10 md:py-20 bg-[#F1D7F5] text-[#6A1B4C] shadow-md rounded-xl">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-4xl font-bold text-center mb-4">Featured Sarees</h2>
-          <p className="text-gray-600 text-center mb-8 md:mb-12">Curated collection of our finest pieces</p>
+          <h2 className="text-2xl md:text-4xl font-bold text-center mb-4 text-[#6A1B4C]">
+            Featured Sarees
+          </h2>
+          <hr className="my-4 border-[#6A1B4C] border-t-2" /> {/* Horizontal line to separate */}
+          <p className="text-[#6A1B4C] text-center mb-8 md:mb-12">
+            Curated collection of our finest pieces
+          </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {productList && productList.length > 0
-  ?productList?.map((product) => (
-              <ShoppingProductTile
-                key={product._id}
-                product={product}
-                handleGetProductDetails={handleGetProductDetails}
-                handleAddtoCart={handleAddtoCart}
-              />
-            )): <p className="text-center text-gray-600">No products found.</p>}
+              ? productList.slice(0, 8).map((product) => (
+                  <ShoppingProductTile
+                    key={product._id}
+                    product={product}
+                    handleGetProductDetails={handleGetProductDetails}
+                    handleAddtoCart={handleAddtoCart}
+                  />
+                ))
+              : <p className="text-center text-[#6A1B4C]">No products found.</p>}
           </div>
         </div>
       </section>

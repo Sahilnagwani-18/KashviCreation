@@ -46,7 +46,7 @@ export default function VideoCarousel() {
   const getNextIndex = () => (currentIndex + 1) % videos.length;
 
   return (
-    <section className="relative bg-gradient-to-b from-gray-100 to-gray-300 py-10 md:py-20 overflow-hidden">
+    <section className="relative bg-white py-10 md:py-20 overflow-hidden">
       <div className="container mx-auto px-4">
         <h2 className="text-2xl md:text-4xl font-bold text-center text-gray-800 mb-4">
           Featured Collections
