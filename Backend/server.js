@@ -28,7 +28,7 @@ const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
 mongoose
   .connect(`${MONGODB_URI}`)
   .then(() => console.log("✅ Database Connected Successfully"))
-  .catch((err) => console.error("❌ Database Connection Error:", err));
+  .catch((err) => console.error("❌  Database Connection Error:", err));
 
 const app = express();
 const PORT = process.env.PORT || 5000;
