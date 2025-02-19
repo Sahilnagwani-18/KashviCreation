@@ -23,6 +23,9 @@ const emailRouter = require("./routes/emailroutes.js");
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
 
+require("dotenv").config();
+console.log("Allowed Origin:", process.env.FRONTEND_URL);
+
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";  
 mongoose
