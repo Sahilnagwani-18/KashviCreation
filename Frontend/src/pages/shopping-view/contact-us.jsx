@@ -25,7 +25,7 @@ const ContactUs = () => {
     setSuccessMessage("");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/contact-message", formData);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/contact-message`, formData);
       if (response.data.success) {
         setSuccessMessage("Message sent successfully!");
         setFormData({ name: "", email: "", message: "" }); // Clear form
@@ -50,7 +50,7 @@ const ContactUs = () => {
         className="text-center mb-12"
       >
         <h1 className="text-5xl font-bold text-[#4A154B] mb-4">Contact Us</h1>
-        <p className="text-xl text-[#6D4A72]">
+        <p className="text-xl text-[#4A154B]">
           Have questions or need assistance? We're here to help!
         </p>
       </motion.header>
@@ -67,40 +67,40 @@ const ContactUs = () => {
           <h2 className="text-2xl font-bold text-[#4A154B] mb-6">Send Us a Message</h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-[#6D4A72]">Name</label>
+              <label htmlFor="name" className="block text-sm font-medium text-[#4A154B]">Name</label>
               <input
                 type="text"
                 id="name"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="mt-1 block w-full px-4 py-2 border border-[#6D4A72] rounded-lg focus:ring-[#4A154B] focus:border-[#4A154B]"
+                className="mt-1 block w-full px-4 py-2 border border-[#4A154B] rounded-lg focus:ring-[#4A154B] focus:border-[#4A154B]"
                 placeholder="Your Name"
                 required
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-[#6D4A72]">Email</label>
+              <label htmlFor="email" className="block text-sm font-medium text-[#4A154B]">Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 block w-full px-4 py-2 border border-[#6D4A72] rounded-lg focus:ring-[#4A154B] focus:border-[#4A154B]"
+                className="mt-1 block w-full px-4 py-2 border border-[#4A154B] rounded-lg focus:ring-[#4A154B] focus:border-[#4A154B]"
                 placeholder="your.email@example.com"
                 required
               />
             </div>
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-[#6D4A72]">Message</label>
+              <label htmlFor="message" className="block text-sm font-medium text-[#4A154B]">Message</label>
               <textarea
                 id="message"
                 name="message"
                 rows="5"
                 value={formData.message}
                 onChange={handleChange}
-                className="mt-1 block w-full px-4 py-2 border border-[#6D4A72] rounded-lg focus:ring-[#4A154B] focus:border-[#4A154B]"
+                className="mt-1 block w-full px-4 py-2 border border-[#4A154B] rounded-lg focus:ring-[#4A154B] focus:border-[#4A154B]"
                 placeholder="Your message..."
                 required
               />
@@ -109,7 +109,7 @@ const ContactUs = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full px-6 py-3 bg-[#6D4A72] text-white rounded-lg hover:bg-[#4A154B] transition-colors"
+                className="w-full px-6 py-3 bg-[#4A154B] text-white rounded-lg hover:bg-[#4A154B] transition-colors"
               >
                 {isLoading ? "Sending..." : "Send Message"}
               </button>
@@ -135,24 +135,24 @@ const ContactUs = () => {
             <h2 className="text-2xl font-bold text-[#4A154B] mb-6">Contact Information</h2>
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <EnvelopeIcon className="w-6 h-6 text-[#6D4A72]" />
+                <EnvelopeIcon className="w-6 h-6 text-[#4A154B]" />
                 <div>
                   <p className="text-lg font-semibold text-[#4A154B]">Email</p>
-                  <p className="text-[#6D4A72]">support@kashvicreation.com</p>
+                  <p className="text-[#4A154B]">support@kashvicreation.com</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <PhoneIcon className="w-6 h-6 text-[#6D4A72]" />
+                <PhoneIcon className="w-6 h-6 text-[#4A154B]" />
                 <div>
                   <p className="text-lg font-semibold text-[#4A154B]">Phone</p>
-                  <p className="text-[#6D4A72]">+91 12345 67890</p>
+                  <p className="text-[#4A154B]">+91 12345 67890</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <MapPinIcon className="w-6 h-6 text-[#6D4A72]" />
+                <MapPinIcon className="w-6 h-6 text-[#4A154B]" />
                 <div>
                   <p className="text-lg font-semibold text-[#4A154B]">Address</p>
-                  <p className="text-[#6D4A72]">123 Kashvi Lane, Creative City, India</p>
+                  <p className="text-[#4A154B]">123 Kashvi Lane, Creative City, India</p>
                 </div>
               </div>
             </div>

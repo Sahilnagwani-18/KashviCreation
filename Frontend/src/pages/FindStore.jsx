@@ -24,7 +24,7 @@ const FindStore = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/store")
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/store`)
       .then(response => setStore(response.data))
       .catch(error => console.error("Error fetching store:", error));
 

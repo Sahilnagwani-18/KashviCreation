@@ -26,7 +26,7 @@ export default function BulkSales() {
         className="text-center mb-12 lg:mb-16"
       >
         <h1 className="text-4xl lg:text-6xl font-bold mb-4">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#6D4A72] to-[#4A154B]">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#4A154B] to-[#4A154B]">
             Bulk Excellence
           </span>
         </h1>
@@ -34,7 +34,7 @@ export default function BulkSales() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="text-lg lg:text-xl text-[#6D4A72] max-w-3xl mx-auto leading-relaxed"
+          className="text-lg lg:text-xl text-[#4A154B] max-w-3xl mx-auto leading-relaxed"
         >
           Custom Solutions for Retailers, Corporates & Event Planners | Volume Discounts & Priority Support
         </motion.p>
@@ -60,7 +60,7 @@ export default function BulkSales() {
               </div>
               <h3 className="text-xl font-bold text-[#4A154B]">{benefit.title}</h3>
             </div>
-            <p className="text-[#6D4A72]">{benefit.content}</p>
+            <p className="text-[#4A154B]">{benefit.content}</p>
           </motion.div>
         ))}
       </motion.div>
@@ -77,17 +77,17 @@ export default function BulkSales() {
             <h2 className="text-2xl font-bold text-[#4A154B] mb-6">Why Choose Us?</h2>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <ShieldCheckIcon className="w-6 h-6 text-[#6D4A72] mt-1" />
+                <ShieldCheckIcon className="w-6 h-6 text-[#4A154B] mt-1" />
                 <div>
                   <h4 className="font-bold text-[#4A154B]">Trusted Partnerships</h4>
-                  <p className="text-[#6D4A72]">500+ successful corporate collaborations</p>
+                  <p className="text-[#4A154B]">500+ successful corporate collaborations</p>
                 </div>
               </div>
               {/* Add more items... */}
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-[#4A154B] to-[#6D4A72] rounded-2xl p-8 text-white">
+          <div className="bg-gradient-to-br from-[#4A154B] to-[#4A154B] rounded-2xl p-8 text-white">
             <h2 className="text-2xl font-bold mb-6">Process Timeline</h2>
             <div className="space-y-6">
               <div className="flex items-center gap-4">
@@ -114,7 +114,7 @@ export default function BulkSales() {
               <label className="block text-[#4A154B] font-medium mb-2">Organization Name</label>
               <input 
                 type="text" 
-                className="w-full p-4 border-2 border-[#F8F0F5] rounded-xl focus:border-[#6D4A72] focus:ring-2 focus:ring-[#6D4A72] transition-all"
+                className="w-full p-4 border-2 border-[#F8F0F5] rounded-xl focus:border-[#4A154B] focus:ring-2 focus:ring-[#4A154B] transition-all"
               />
             </div>
 
@@ -123,14 +123,14 @@ export default function BulkSales() {
                 <label className="block text-[#4A154B] font-medium mb-2">Contact Email</label>
                 <input 
                   type="email" 
-                  className="w-full p-4 border-2 border-[#F8F0F5] rounded-xl focus:border-[#6D4A72] focus:ring-2 focus:ring-[#6D4A72] transition-all"
+                  className="w-full p-4 border-2 border-[#F8F0F5] rounded-xl focus:border-[#4A154B] focus:ring-2 focus:ring-[#4A154B] transition-all"
                 />
               </div>
               <div>
                 <label className="block text-[#4A154B] font-medium mb-2">Phone Number</label>
                 <input 
                   type="tel" 
-                  className="w-full p-4 border-2 border-[#F8F0F5] rounded-xl focus:border-[#6D4A72] focus:ring-2 focus:ring-[#6D4A72] transition-all"
+                  className="w-full p-4 border-2 border-[#F8F0F5] rounded-xl focus:border-[#4A154B] focus:ring-2 focus:ring-[#4A154B] transition-all"
                 />
               </div>
             </div>
@@ -139,14 +139,14 @@ export default function BulkSales() {
               <label className="block text-[#4A154B] font-medium mb-2">Additional Requirements</label>
               <textarea 
                 rows="4"
-                className="w-full p-4 border-2 border-[#F8F0F5] rounded-xl focus:border-[#6D4A72] focus:ring-2 focus:ring-[#6D4A72] transition-all"
+                className="w-full p-4 border-2 border-[#F8F0F5] rounded-xl focus:border-[#4A154B] focus:ring-2 focus:ring-[#4A154B] transition-all"
               />
             </div>
 
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-full bg-gradient-to-r from-[#6D4A72] to-[#4A154B] text-white py-4 rounded-xl font-bold text-lg"
+              className="w-full bg-gradient-to-r from-[#4A154B] to-[#4A154B] text-white py-4 rounded-xl font-bold text-lg"
             >
               Request Personalized Quote
             </motion.button>

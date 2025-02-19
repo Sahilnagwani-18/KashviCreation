@@ -33,7 +33,7 @@ export default function Influencers() {
         className="text-center mb-12 lg:mb-16"
       >
         <h1 className="text-4xl lg:text-6xl font-bold mb-4">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#6D4A72] to-[#4A154B]">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#4A154B] to-[#4A154B]">
             Style Pioneers
           </span>
         </h1>
@@ -41,7 +41,7 @@ export default function Influencers() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="text-lg lg:text-xl text-[#6D4A72] max-w-3xl mx-auto leading-relaxed"
+          className="text-lg lg:text-xl text-[#4A154B] max-w-3xl mx-auto leading-relaxed"
         >
           Meet Our Global Network of Fashion Innovators and Trendsetters
         </motion.p>
@@ -62,7 +62,7 @@ export default function Influencers() {
             className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all"
           >
             <div className="text-3xl font-bold text-[#4A154B]">{stat.value}</div>
-            <div className="text-sm text-[#6D4A72] mt-1">{stat.label}</div>
+            <div className="text-sm text-[#4A154B] mt-1">{stat.label}</div>
           </motion.div>
         ))}
       </motion.div>
@@ -98,11 +98,11 @@ export default function Influencers() {
             <div className="p-6 space-y-4">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <UserGroupIcon className="w-5 h-5 text-[#6D4A72]" />
+                  <UserGroupIcon className="w-5 h-5 text-[#4A154B]" />
                   <span className="text-sm text-[#4A154B]">{influencer.followers}</span>
                 </div>
                 <div className="flex items-center gap-1 bg-[#F8F0F5] px-3 py-1 rounded-full">
-                  <StarIcon className="w-4 h-4 text-[#6D4A72]" />
+                  <StarIcon className="w-4 h-4 text-[#4A154B]" />
                   <span className="text-sm text-[#4A154B]">{influencer.engagement}</span>
                 </div>
               </div>
@@ -121,7 +121,7 @@ export default function Influencers() {
 
               <motion.div
                 whileHover={{ x: 5 }}
-                className="inline-flex items-center gap-1 text-[#6D4A72] font-medium cursor-pointer"
+                className="inline-flex items-center gap-1 text-[#4A154B] font-medium cursor-pointer"
               >
                 View Profile
                 <ArrowTopRightOnSquareIcon className="w-4 h-4" />

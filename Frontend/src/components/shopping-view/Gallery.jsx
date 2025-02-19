@@ -37,7 +37,7 @@ const Gallery = () => {
                   <h3 className="text-gray-300 text-lg">{image.category}</h3>
                   <p className="text-white text-sm mt-2">{image.label}</p>
                   <a
-                    href="http://localhost:5173/shop/listing"
+                    href="/shop/listing"
                     className="mt-4 inline-block bg-black opacity-60 text-white px-6 py-2 rounded-md mx-auto w-[200px] hover:opacity-100"
                   >
                     SHOP NOW

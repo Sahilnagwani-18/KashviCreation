@@ -69,7 +69,7 @@ function HeaderRightContent() {
       {/* Find Store Button with Glow Effect */}
       <Button
         onClick={() => navigate("/shop/store")}
-        className="bg-[#D4AF37] hover:bg-[#B88A44] text-[#800020] font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-[#D4AF37]/50"
+        className="bg-[#D4AF37] hover:bg-[#B88A44] text-[#4A154B] font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:shadow-[#D4AF37]/50"
       >
         <MapPin className="mr-2 h-5 w-5" />
         Find Store
@@ -104,12 +104,12 @@ function HeaderRightContent() {
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" className="w-56 bg-[#FAF3E0] text-[#800020]">
+        <DropdownMenuContent side="right" className="w-56 bg-[#FAF3E0] text-[#4A154B]">
           <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => navigate("/shop/account")}
-            className="hover:bg-[#D4AF37] hover:text-[#800020] transition-colors duration-300"
+            className="hover:bg-[#D4AF37] hover:text-[#4A154B] transition-colors duration-300"
           >
             <UserCog className="mr-2 h-4 w-4" />
             Account
@@ -117,7 +117,7 @@ function HeaderRightContent() {
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={handleLogout}
-            className="hover:bg-[#D4AF37] hover:text-[#800020] transition-colors duration-300"
+            className="hover:bg-[#D4AF37] hover:text-[#4A154B] transition-colors duration-300"
           >
             <LogOut className="mr-2 h-4 w-4" />
             Logout
@@ -130,7 +130,7 @@ function HeaderRightContent() {
 
 function ShoppingHeader() {
   return (
-    <header className="sticky top-0 z-40 h-20 w-full border-b bg-gradient-to-r from-[#4A154B] to-[#6D4A72] text-[#FAF3E0] shadow-lg">
+    <header className="sticky top-0 z-40 h-20 w-full border-b bg-[#4A154B] text-[#FAF3E0] shadow-lg">
       <div className="flex h-20 items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link
@@ -159,7 +159,7 @@ function ShoppingHeader() {
               <span className="sr-only">Toggle header menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-full max-w-xs bg-[#FAF3E0] text-[#800020]">
+          <SheetContent side="left" className="w-full max-w-xs bg-[#FAF3E0] text-[#4A154B]">
             <MenuItems />
             <HeaderRightContent />
           </SheetContent>
