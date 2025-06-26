@@ -120,8 +120,6 @@
 
 // export default SearchProducts;
 
-
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
@@ -134,86 +132,82 @@ import { fetchProductDetails } from "@/store/shop/products-slice";
 import { getSearchResults, resetSearchResults } from "@/store/shop/search-slice";
 
 function SearchProducts() {
-  const [searchParams] = useSearchParams();
+  const [keyword, setKeyword] = useState(""); // Controlled input
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
+
   const { searchResults } = useSelector((state) => state.shopSearch);
   const { productDetails } = useSelector((state) => state.shopProducts);
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
-  const { toast } = useToast();
+  const toast = useToast(); // Ensure toast is a callable
 
-  const handleAddtoCart = (getCurrentProductId, getTotalStock) => {
-    console.log(cartItems);
-    let getCartItems = cartItems.items || [];
+  // 🔍 Sync URL param with input
+  useEffect(() => {
+    const paramKeyword = searchParams.get("keyword") || "";
+    setKeyword(paramKeyword);
 
-    if (getCartItems.length) {
-      const indexOfCurrentItem = getCartItems.findIndex(
-        (item) => item.productId === getCurrentProductId
-      );
-      if (indexOfCurrentItem > -1) {
-        const getQuantity = getCartItems[indexOfCurrentItem].quantity;
-        if (getQuantity + 1 > getTotalStock) {
-          toast({
-            title: `Only ${getQuantity} quantity can be added for this item`,
-            variant: "destructive",
-          });
-          return;
-        }
-      }
+    if (paramKeyword.length >= 3) {
+      dispatch(getSearchResults(paramKeyword));
+    } else {
+      dispatch(resetSearchResults());
+    }
+  }, [searchParams, dispatch]);
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setKeyword(value);
+
+    // debounce-like immediate update
+    if (value.trim().length >= 3) {
+      setSearchParams({ keyword: value });
+    } else {
+      setSearchParams({});
+    }
+  };
+
+  const handleAddtoCart = (productId, totalStock) => {
+    const getCartItems = cartItems.items || [];
+    const index = getCartItems.findIndex((item) => item.productId === productId);
+
+    if (index > -1 && getCartItems[index].quantity + 1 > totalStock) {
+      toast({
+        title: `Only ${getCartItems[index].quantity} quantity can be added.`,
+        variant: "destructive",
+      });
+      return;
     }
 
-    dispatch(
-      addToCart({
-        userId: user?.id,
-        productId: getCurrentProductId,
-        quantity: 1,
-      })
-    ).then((data) => {
-      if (data?.payload?.success) {
+    dispatch(addToCart({ userId: user?.id, productId, quantity: 1 })).then((res) => {
+      if (res?.payload?.success) {
         dispatch(fetchCartItems(user?.id));
-        toast({
-          title: "Product is added to cart",
-        });
+        toast({ title: "Added to cart ✅" });
       }
     });
   };
-  // Get search parameters from URL
-  const keyword = searchParams.get("keyword");
-  const category = searchParams.get("category");
 
-  const handleGetProductDetails = (getCurrentProductId) => {
-    console.log(getCurrentProductId);
-    dispatch(fetchProductDetails(getCurrentProductId));
+  const handleGetProductDetails = (productId) => {
+    dispatch(fetchProductDetails(productId));
   };
 
-  // Trigger search when component mounts or URL params change
   useEffect(() => {
-    if (keyword || category) {
-      const searchTerm = keyword || category;
-      dispatch(getSearchResults(searchTerm));
-    }
-  }, [keyword, category, dispatch]);
-
-  // Rest of your component remains the same...
-  // (handleAddtoCart, handleGetProductDetails, etc.)
+    if (productDetails) setOpenDetailsDialog(true);
+  }, [productDetails]);
 
   return (
     <div className="container mx-auto md:px-6 px-4 py-8">
       <div className="flex justify-center mb-8">
-        <div className="w-full flex items-center">
-          <Input
-            value={keyword || category || ""} // Show current search term
-            name="search"
-            onChange={(e) => setKeyword(e.target.value)}
-            className="py-6"
-            placeholder="Search Products..."
-          />
-        </div>
+        <Input
+          value={keyword}
+          onChange={handleSearchChange}
+          className="py-6"
+          placeholder="Search Products..."
+        />
       </div>
-      {/* Display search results */}
+
       {!searchResults.length ? (
-        <h1 className="text-5xl font-extrabold">No results found for "{keyword || category}"!</h1>
+        <h1 className="text-3xl font-bold text-center">No results found for "{keyword}"</h1>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {searchResults.map((item) => (
@@ -226,6 +220,7 @@ function SearchProducts() {
           ))}
         </div>
       )}
+
       <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
