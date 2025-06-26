@@ -1,9 +1,12 @@
+// src/App.jsx
+import React, { useEffect } from "react";
+import axios from "axios";
 import { Route, Routes } from "react-router-dom";
 import ScrollToTop from "./components/shopping-view/ScrollToTop"; 
 import AuthLayout from "./components/auth/layout";
 import AuthLogin from "./pages/auth/login";
 import AuthRegister from "./pages/auth/register";
-import AuthVerifyOTP from "./pages/auth/verify-otp"; // Import the OTP verification page
+import AuthVerifyOTP from "./pages/auth/verify-otp";
 import AdminLayout from "./components/admin-view/layout";
 import AdminDashboard from "./pages/admin-view/dashboard";
 import AdminProducts from "./pages/admin-view/products";
@@ -18,14 +21,11 @@ import ShoppingAccount from "./pages/shopping-view/account";
 import CheckAuth from "./components/common/check-auth";
 import UnauthPage from "./pages/unauth-page";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
-
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/search";
 import FindStore from "./pages/FindStore";
-import "./App.css";
 import AboutUs from "./components/shopping-view/Aboutus";
 import TermsConditions from "./pages/shopping-view/terms";
 import PrivacyPolicy from "./components/shopping-view/privacy";
@@ -34,34 +34,44 @@ import Company from "./pages/shopping-view/company";
 import Blog from "./pages/shopping-view/blog";
 import BulkSales from "./pages/shopping-view/bulksales";
 import Influencers from "./pages/shopping-view/influencers";
+import "./App.css";
 
 function App() {
+  // ▶️ Configure Axios once to send cookies on every request
+  axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
+  axios.defaults.withCredentials = true;
+
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
 
+  // On mount, check if session cookie is valid
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Skeleton className="w-[800px] h-[600px] bg-black" />
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-col overflow-hidden ">
+    <div className="flex flex-col overflow-hidden">
       <ScrollToTop />
       <Routes>
+        {/* Root just runs the guard logic */}
         <Route
           path="/"
-          element={
-            <CheckAuth
-              isAuthenticated={isAuthenticated}
-              user={user}
-            ></CheckAuth>
-          }
+          element={<CheckAuth isAuthenticated={isAuthenticated} user={user} />}
         />
+
+        {/* Auth pages */}
         <Route
-          path="/auth"
+          path="/auth/*"
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AuthLayout />
@@ -70,14 +80,12 @@ function App() {
         >
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
-          <Route
-            path="verify-otp"
-            element={<AuthVerifyOTP />}
-            // Debugging
-          />
+          <Route path="verify-otp" element={<AuthVerifyOTP />} />
         </Route>
+
+        {/* Admin pages */}
         <Route
-          path="/admin"
+          path="/admin/*"
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AdminLayout />
@@ -89,8 +97,10 @@ function App() {
           <Route path="orders" element={<AdminOrders />} />
           <Route path="features" element={<AdminFeatures />} />
         </Route>
+
+        {/* Shop pages */}
         <Route
-          path="/shop"
+          path="/shop/*"
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <ShoppingLayout />
@@ -103,17 +113,21 @@ function App() {
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="store" element={<FindStore />} />
           <Route path="about-us" element={<AboutUs />} />
-          <Route path="/shop/terms-condition" element={<TermsConditions />} />
-          <Route path="/shop/contact-us" element={<ContactUs />} />
-          <Route path="/shop/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/shop/company" element={<Company />} />
-          <Route path="/shop/blog" element={<Blog />} />
-          <Route path="/shop/bulk-orders" element={<BulkSales />} />
-          <Route path="/shop/influencers" element={<Influencers />} />
+          <Route path="terms-condition" element={<TermsConditions />} />
+          <Route path="contact-us" element={<ContactUs />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="company" element={<Company />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="bulk-orders" element={<BulkSales />} />
+          <Route path="influencers" element={<Influencers />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="search" element={<SearchProducts />} />
         </Route>
+
+        {/* Unauthenticated landing */}
         <Route path="/unauth-page" element={<UnauthPage />} />
+
+        {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
