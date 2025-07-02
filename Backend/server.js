@@ -31,7 +31,7 @@ const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://new-repo-f8gj.vercel.app"
+  "https://kashvi-creation-1nlj.vercel.app"
 ];
 
 app.use(
