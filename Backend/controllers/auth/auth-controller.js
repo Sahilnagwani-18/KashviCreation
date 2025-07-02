@@ -23,7 +23,8 @@ const registerUser = async (req, res) => {
     if (checkUserByPhone) {
       return res.json({
         success: false,
-        message: "User already exists with the same phone number! Please try again.",
+        message:
+          "User already exists with the same phone number! Please try again.",
       });
     }
 
@@ -44,7 +45,6 @@ const registerUser = async (req, res) => {
 
     const otpSMSMessage = `Welcome To Kashvi Creation !!
     Your verification code is: ${verificationCode}. This code will expire in 10 minutes.`;
-    
 
     // Generate email template for OTP
     function generateOTPEmailTemplate(verificationCode) {
@@ -111,26 +111,29 @@ const registerUser = async (req, res) => {
 
     // Send OTP via email
     const otpEmailMessage = generateOTPEmailTemplate(verificationCode);
-    
 
     // Send welcome email
     const welcomeEmailMessage = generateWelcomeEmailTemplate(userName);
-    
 
     // Send OTP via SMS
-    
 
     // Send welcome SMS
     const welcomeSMSMessage = `Welcome to Kashvi Creation, ${userName}! Thank you for registering with us.`;
-    
-
 
     await Promise.all([
       sendOTPViaSMS(phoneNumber, otpSMSMessage),
       sendOTPViaSMS(phoneNumber, welcomeSMSMessage),
-      sendEmail({ email, subject: "Email Verification", message: otpEmailMessage }),
-      sendEmail({ email, subject: "Welcome to Kashvi Creation!", message: welcomeEmailMessage })
-  ]);
+      sendEmail({
+        email,
+        subject: "Email Verification",
+        message: otpEmailMessage,
+      }),
+      sendEmail({
+        email,
+        subject: "Welcome to Kashvi Creation!",
+        message: welcomeEmailMessage,
+      }),
+    ]);
 
     res.status(200).json({
       success: true,
@@ -228,7 +231,10 @@ const loginUser = async (req, res) => {
     }
 
     // Check password
-    const checkPasswordMatch = await bcrypt.compare(password, checkUser.password);
+    const checkPasswordMatch = await bcrypt.compare(
+      password,
+      checkUser.password
+    );
     if (!checkPasswordMatch) {
       return res.json({
         success: false,
@@ -249,17 +255,24 @@ const loginUser = async (req, res) => {
       { expiresIn: "5d" }
     );
 
-    res.cookie("token", token, { httpOnly: true, secure: false }).json({
-      success: true,
-      message: "Logged in successfully",
-      user: {
-        email: checkUser.email,
-        phoneNumber: checkUser.phoneNumber,
-        role: checkUser.role,
-        id: checkUser._id,
-        userName: checkUser.userName,
-      },
-    });
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true, // must be true in production (Render is HTTPS)
+        sameSite: "None", // must be 'None' for cross-site cookies
+        maxAge: 5 * 24 * 60 * 60 * 1000, // 5 days
+      })
+      .json({
+        success: true,
+        message: "Logged in successfully",
+        user: {
+          email: checkUser.email,
+          phoneNumber: checkUser.phoneNumber,
+          role: checkUser.role,
+          id: checkUser._id,
+          userName: checkUser.userName,
+        },
+      });
   } catch (e) {
     console.log(e);
     res.status(500).json({

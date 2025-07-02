@@ -2,10 +2,10 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  cartItems: [],   // array of item objects
-  cartId:    null, // Mongo _id of the Cart document
+  cartItems: [],
+  cartId: null,
   isLoading: false,
-  error:     null, // optional for future error handling
+  error: null,
 };
 
 // Add to cart
@@ -15,9 +15,10 @@ export const addToCart = createAsyncThunk(
     try {
       const { data } = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/shop/cart/add`,
-        { userId, productId, quantity: quantity || 1 }
+        { userId, productId, quantity: quantity || 1 },
+        { withCredentials: true } // ✅ ADDED
       );
-      return data; // expects { success, data: { _id, items: [...] } }
+      return data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
     }
@@ -30,9 +31,10 @@ export const fetchCartItems = createAsyncThunk(
   async (userId, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/shop/cart/get/${userId}`
+        `${import.meta.env.VITE_BACKEND_URL}/api/shop/cart/get/${userId}`,
+        { withCredentials: true } // ✅ ADDED
       );
-      return data; // expects { success, data: { _id, items: [...] } }
+      return data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
     }
@@ -46,9 +48,10 @@ export const updateCartQuantity = createAsyncThunk(
     try {
       const { data } = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/shop/cart/update-cart`,
-        { userId, productId, quantity }
+        { userId, productId, quantity },
+        { withCredentials: true } // ✅ ADDED
       );
-      return data; // expects { success, data: { _id, items: [...] } }
+      return data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
     }
@@ -61,9 +64,10 @@ export const deleteCartItem = createAsyncThunk(
   async ({ userId, productId }, { rejectWithValue }) => {
     try {
       const { data } = await axios.delete(
-        `${import.meta.env.VITE_BACKEND_URL}/api/shop/cart/${userId}/${productId}`
+        `${import.meta.env.VITE_BACKEND_URL}/api/shop/cart/${userId}/${productId}`,
+        { withCredentials: true } // ✅ ADDED
       );
-      return data; // expects { success, data: { _id, items: [...] } }
+      return data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
     }
@@ -76,16 +80,15 @@ const shoppingCartSlice = createSlice({
   reducers: {
     clearCart(state) {
       state.cartItems = [];
-      state.cartId    = null;
+      state.cartId = null;
     },
   },
   extraReducers: (builder) => {
     const handleFulfilled = (state, action) => {
       state.isLoading = false;
-      // action.payload.data: { _id, items }
-      state.cartId    = action.payload.data._id;
+      state.cartId = action.payload.data._id;
       state.cartItems = action.payload.data.items;
-      state.error     = null;
+      state.error = null;
     };
 
     builder
@@ -93,28 +96,28 @@ const shoppingCartSlice = createSlice({
       .addCase(addToCart.fulfilled, handleFulfilled)
       .addCase(addToCart.rejected, (s, a) => {
         s.isLoading = false;
-        s.error     = a.payload || a.error.message;
+        s.error = a.payload || a.error.message;
       })
 
       .addCase(fetchCartItems.pending, (s) => { s.isLoading = true; })
       .addCase(fetchCartItems.fulfilled, handleFulfilled)
       .addCase(fetchCartItems.rejected, (s, a) => {
         s.isLoading = false;
-        s.error     = a.payload || a.error.message;
+        s.error = a.payload || a.error.message;
       })
 
       .addCase(updateCartQuantity.pending, (s) => { s.isLoading = true; })
       .addCase(updateCartQuantity.fulfilled, handleFulfilled)
       .addCase(updateCartQuantity.rejected, (s, a) => {
         s.isLoading = false;
-        s.error     = a.payload || a.error.message;
+        s.error = a.payload || a.error.message;
       })
 
       .addCase(deleteCartItem.pending, (s) => { s.isLoading = true; })
       .addCase(deleteCartItem.fulfilled, handleFulfilled)
       .addCase(deleteCartItem.rejected, (s, a) => {
         s.isLoading = false;
-        s.error     = a.payload || a.error.message;
+        s.error = a.payload || a.error.message;
       });
   },
 });

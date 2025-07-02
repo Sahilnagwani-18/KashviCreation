@@ -1,69 +1,82 @@
-// src/store/shop/order-slice.js
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
   approvalURL: null,
-  isLoading:   false,
-  orderId:     null,
-  orderList:   [],
-  orderDetails:null,
-  error:       null,   // ← capture createNewOrder errors here
+  isLoading: false,
+  orderId: null,
+  orderList: [],
+  orderDetails: null,
+  error: null,
 };
 
-// 1️⃣ Create order thunk with rejectWithValue
+// ➕ Create New Order
 export const createNewOrder = createAsyncThunk(
   "order/createNewOrder",
   async (orderData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/shop/order/create`,
-        orderData
+        orderData,
+        { withCredentials: true }
       );
       return response.data;
     } catch (err) {
-      // If server returned JSON error body, forward it
-      if (err.response?.data) {
-        return rejectWithValue(err.response.data);
-      }
-      // Fallback generic message
-      return rejectWithValue({ message: err.message });
+      return rejectWithValue(err.response?.data || { message: err.message });
     }
   }
 );
 
-// 2️⃣ Other thunks (no change needed)
+// ✅ Capture Payment
 export const capturePayment = createAsyncThunk(
   "order/capturePayment",
-  async ({ paymentId, payerId, orderId }) => {
-    const response = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/api/shop/order/capture`,
-      { paymentId, payerId, orderId }
-    );
-    return response.data;
+  async ({ paymentId, payerId, orderId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/shop/order/capture`,
+        { paymentId, payerId, orderId },
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || { message: err.message });
+    }
   }
 );
 
+// 📦 Fetch All Orders by User
 export const getAllOrdersByUserId = createAsyncThunk(
   "order/getAllOrdersByUserId",
-  async (userId) => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/api/shop/order/list/${userId}`
-    );
-    return response.data;
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/shop/order/list/${userId}`,
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || { message: err.message });
+    }
   }
 );
 
+// 📄 Get Order Details
 export const getOrderDetails = createAsyncThunk(
   "order/getOrderDetails",
-  async (id) => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/api/shop/order/details/${id}`
-    );
-    return response.data;
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/shop/order/details/${id}`,
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || { message: err.message });
+    }
   }
 );
 
+// 🧾 Order Slice
 const shoppingOrderSlice = createSlice({
   name: "shoppingOrder",
   initialState,
@@ -77,15 +90,15 @@ const shoppingOrderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // — createNewOrder —
+      // 🔄 Create Order
       .addCase(createNewOrder.pending, (state) => {
         state.isLoading = true;
-        state.error     = null;
+        state.error = null;
       })
       .addCase(createNewOrder.fulfilled, (state, action) => {
-        state.isLoading   = false;
+        state.isLoading = false;
         state.approvalURL = action.payload.approvalURL;
-        state.orderId     = action.payload.orderId;
+        state.orderId = action.payload.orderId;
         sessionStorage.setItem(
           "currentOrderId",
           JSON.stringify(action.payload.orderId)
@@ -93,46 +106,48 @@ const shoppingOrderSlice = createSlice({
       })
       .addCase(createNewOrder.rejected, (state, action) => {
         state.isLoading = false;
-        // If rejectWithValue was used, payload holds the server’s error object
-        state.error     = action.payload?.message || action.error.message;
+        state.error = action.payload?.message || action.error.message;
       })
 
-      // — getAllOrdersByUserId —
+      // 🧾 Get All Orders
       .addCase(getAllOrdersByUserId.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getAllOrdersByUserId.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.orderList = action.payload.data;
+        state.orderList = action.payload.data || [];
       })
-      .addCase(getAllOrdersByUserId.rejected, (state) => {
+      .addCase(getAllOrdersByUserId.rejected, (state, action) => {
         state.isLoading = false;
         state.orderList = [];
+        state.error = action.payload?.message || action.error.message;
       })
 
-      // — getOrderDetails —
+      // 🧾 Get Order Details
       .addCase(getOrderDetails.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getOrderDetails.fulfilled, (state, action) => {
-        state.isLoading    = false;
-        state.orderDetails = action.payload.data;
+        state.isLoading = false;
+        state.orderDetails = action.payload.data || null;
       })
-      .addCase(getOrderDetails.rejected, (state) => {
-        state.isLoading    = false;
+      .addCase(getOrderDetails.rejected, (state, action) => {
+        state.isLoading = false;
         state.orderDetails = null;
+        state.error = action.payload?.message || action.error.message;
       })
 
-      // — capturePayment —
+      // 💳 Capture Payment
       .addCase(capturePayment.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(capturePayment.fulfilled, (state, action) => {
         state.isLoading = false;
-        // handle any returned data…
+        // Handle success if needed
       })
       .addCase(capturePayment.rejected, (state, action) => {
         state.isLoading = false;
+        state.error = action.payload?.message || action.error.message;
       });
   },
 });

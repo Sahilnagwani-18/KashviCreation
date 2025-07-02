@@ -4,61 +4,82 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   productList: [],
+  error: null,
 };
 
+// ✅ Add Product
 export const addNewProduct = createAsyncThunk(
-  "/products/addnewproduct",
-  async (formData) => {
-    const result = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/api/admin/products/add`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    return result?.data;
+  "adminProducts/addNewProduct", // Removed slash
+  async (formData, { rejectWithValue }) => {
+    try {
+      const result = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/products/add`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      return result?.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to add product");
+    }
   }
 );
 
+// ✅ Fetch All Products
 export const fetchAllProducts = createAsyncThunk(
-  "/products/fetchAllProducts",
-  async () => {
-    const result = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/api/admin/products/get`
-    );
-
-    return result?.data;
+  "adminProducts/fetchAllProducts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const result = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/products/get`,
+        { withCredentials: true }
+      );
+      return result?.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch products");
+    }
   }
 );
 
+// ✅ Edit Product
 export const editProduct = createAsyncThunk(
-  "/products/editProduct",
-  async ({ id, formData }) => {
-    const result = await axios.put(
-      `${import.meta.env.VITE_BACKEND_URL}/api/admin/products/edit/${id}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    return result?.data;
+  "adminProducts/editProduct",
+  async ({ id, formData }, { rejectWithValue }) => {
+    try {
+      const result = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/products/edit/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      return result?.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to edit product");
+    }
   }
 );
 
+// ✅ Delete Product
 export const deleteProduct = createAsyncThunk(
-  "/products/deleteProduct",
-  async (id) => {
-    const result = await axios.delete(
-      `${import.meta.env.VITE_BACKEND_URL}/api/admin/products/delete/${id}`
-    );
-
-    return result?.data;
+  "adminProducts/deleteProduct",
+  async (id, { rejectWithValue }) => {
+    try {
+      const result = await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/products/delete/${id}`,
+        { withCredentials: true }
+      );
+      return result?.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to delete product");
+    }
   }
 );
 
@@ -68,17 +89,23 @@ const AdminProductsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+
+      // 🔁 Fetch All Products
       .addCase(fetchAllProducts.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(fetchAllProducts.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.productList = action.payload.data;
+        state.productList = action.payload.data || [];
       })
       .addCase(fetchAllProducts.rejected, (state, action) => {
         state.isLoading = false;
+        state.error = action.payload;
         state.productList = [];
       });
+
+    // Optionally: You can handle loading/error for add/edit/delete as well if needed
   },
 });
 

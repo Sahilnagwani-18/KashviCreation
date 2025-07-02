@@ -3,8 +3,9 @@ import axios from "axios";
 
 const initialState = {
   isAuthenticated: false,
-  isLoading: true,
+  isLoading: false,
   user: null,
+  error: null,
 };
 
 // Register User
@@ -15,13 +16,13 @@ export const registerUser = createAsyncThunk(
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`,
         formData,
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
-      return response.data; // Ensure this returns { success: true, message: "..." }
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(
+        error.response?.data?.message || "Registration failed."
+      );
     }
   }
 );
@@ -32,17 +33,15 @@ export const loginUser = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
         formData,
-        console.log(import.meta.env.VITE_BACKEND_URL),
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(
+        error.response?.data?.message || "Login failed."
+      );
     }
   }
 );
@@ -55,13 +54,13 @@ export const logoutUser = createAsyncThunk(
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`,
         {},
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(
+        error.response?.data?.message || "Logout failed."
+      );
     }
   }
 );
@@ -76,14 +75,15 @@ export const checkAuth = createAsyncThunk(
         {
           withCredentials: true,
           headers: {
-            "Cache-Control":
-              "no-store, no-cache, must-revalidate, proxy-revalidate",
+            "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
           },
         }
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(
+        error.response?.data?.message || "Authentication check failed."
+      );
     }
   }
 );
@@ -96,13 +96,13 @@ export const verifyOTP = createAsyncThunk(
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/verify-otp`,
         { email, otp },
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(
+        error.response?.data?.message || "OTP verification failed."
+      );
     }
   }
 );
@@ -115,14 +115,18 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.isAuthenticated = !!action.payload;
     },
+    clearAuthError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
-      // Register User
+      // Register
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(registerUser.fulfilled, (state) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
@@ -131,11 +135,13 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+        state.error = action.payload;
       })
 
-      // Login User
+      // Login
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -146,11 +152,28 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+        state.error = action.payload;
       })
 
-      // Check Authentication
+      // Logout
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Check Auth
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -161,24 +184,13 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
-      })
-
-      // Logout User
-      .addCase(logoutUser.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(logoutUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = null;
-        state.isAuthenticated = false;
-      })
-      .addCase(logoutUser.rejected, (state, action) => {
-        state.isLoading = false;
+        state.error = action.payload;
       })
 
       // Verify OTP
       .addCase(verifyOTP.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -189,9 +201,12 @@ const authSlice = createSlice({
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+        state.error = action.payload;
       });
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, clearAuthError } = authSlice.actions;
 export default authSlice.reducer;
