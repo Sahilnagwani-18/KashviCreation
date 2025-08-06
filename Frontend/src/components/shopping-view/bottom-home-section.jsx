@@ -52,7 +52,7 @@ const BottomSection = () => {
 
   
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen text-center px-4 mt-10 mb-10">
+    <div className="bg-[#F1D7F5] flex flex-col items-center justify-center min-h-screen text-center ">
       {/* Stats Section */}
       <motion.div
         className="flex flex-wrap gap-4 md:gap-8 justify-center"

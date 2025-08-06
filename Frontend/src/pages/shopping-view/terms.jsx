@@ -111,14 +111,14 @@ const termsSections = [
 
 export default function TermsConditions() {
   return (
-    <div className="bg-[#FDF8F5] min-h-screen">
+    <div className="bg-[#F1D7F5] min-h-screen">
       {/* Hero Section */}
       <motion.header 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="relative h-[400px] overflow-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-[#F5E6E8] to-[#FFE4D6]" />
+        <div className="absolute inset-0 bg-gradient-to-r bg-[#F1D7F5] to-[#F1D7F9]" />
         <div className="relative max-w-6xl mx-auto px-4 pt-32 text-center">
           <h1 className="text-5xl font-bold text-[#5A4A4F] mb-4">
             Crafted Commitments
@@ -140,7 +140,7 @@ export default function TermsConditions() {
               className="bg-white rounded-2xl shadow-xl overflow-hidden"
             >
               {/* Section Header */}
-              <div className="flex items-center p-6 bg-gradient-to-r from-[#F5E6E8] to-[#FFE4D6]">
+              <div className="flex items-center p-6 bg-gradient-to-r from-[#F1D7F5] to-[#F1D7F9]">
                 <div className="p-3 bg-white rounded-lg shadow-sm mr-4">
                   {section.icon}
                 </div>
@@ -161,8 +161,8 @@ export default function TermsConditions() {
                 {section.content.points && (
                   <div className="space-y-4">
                     {section.content.points.map((point, i) => (
-                      <div key={i} className="flex items-start p-4 bg-[#FFF8F5] rounded-lg">
-                        <div className="w-6 h-6 bg-[#A37B73] text-white rounded-full flex items-center justify-center mr-3">
+                      <div key={i} className="flex items-start p-4 bg-[#F1D7F5] rounded-lg">
+                        <div className="w-6 h-6 bg-[#F1D7F5] text-white rounded-full flex items-center justify-center mr-3">
                           {i + 1}
                         </div>
                         <span className="flex-1">{point}</span>
@@ -175,7 +175,7 @@ export default function TermsConditions() {
                 {section.content.methods && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {section.content.methods.map((method, i) => (
-                      <div key={i} className="p-4 bg-[#FFF8F5] rounded-lg">
+                      <div key={i} className="p-4 bg-[#F1D7F] rounded-lg">
                         <div className="flex items-center gap-2">
                           <span className="text-xl">{method.icon}</span>
                           <span className="font-medium">{method.name}</span>

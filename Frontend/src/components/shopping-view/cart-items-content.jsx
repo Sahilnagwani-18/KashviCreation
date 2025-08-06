@@ -10,97 +10,101 @@ function UserCartItemsContent({ cartItem }) {
   const { productList } = useSelector((state) => state.shopProducts);
   const dispatch = useDispatch();
   const { toast } = useToast();
-function handleUpdateQuantity(getCartItem, typeOfAction) {
-  const getCartItems = Array.isArray(cartItems) ? cartItems : cartItems?.items || [];
 
-  if (typeOfAction === "plus" && getCartItems.length) {
-    const indexOfCurrentCartItem = getCartItems.findIndex(
-      (item) => item.productId === getCartItem?.productId
-    );
+  function handleUpdateQuantity(getCartItem, typeOfAction) {
+    const getCartItems = Array.isArray(cartItems) ? cartItems : cartItems?.items || [];
 
-    const getCurrentProductIndex = productList.findIndex(
-      (product) => product._id === getCartItem?.productId
-    );
-    const getTotalStock = productList[getCurrentProductIndex]?.totalStock || 0;
+    if (typeOfAction === "plus" && getCartItems.length) {
+      const indexOfCurrentCartItem = getCartItems.findIndex(
+        (item) => item.productId === getCartItem?.productId
+      );
 
-    if (indexOfCurrentCartItem > -1) {
-      const getQuantity = getCartItems[indexOfCurrentCartItem].quantity;
-      if (getQuantity + 1 > getTotalStock) {
-        toast({
-          title: `Only ${getQuantity} quantity can be added for this item`,
-          variant: "destructive",
-        });
-        return;
+      const getCurrentProductIndex = productList.findIndex(
+        (product) => product._id === getCartItem?.productId
+      );
+      const getTotalStock = productList[getCurrentProductIndex]?.totalStock || 0;
+
+      if (indexOfCurrentCartItem > -1) {
+        const getQuantity = getCartItems[indexOfCurrentCartItem].quantity;
+        if (getQuantity + 1 > getTotalStock) {
+          toast({
+            title: `Only ${getQuantity} quantity can be added for this item`,
+            variant: "destructive",
+          });
+          return;
+        }
       }
     }
+
+    dispatch(
+      updateCartQuantity({
+        userId: user?.id,
+        productId: getCartItem?.productId,
+        quantity:
+          typeOfAction === "plus"
+            ? getCartItem?.quantity + 1
+            : getCartItem?.quantity - 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        toast({ title: "Cart item updated successfully" });
+      }
+    });
   }
-
-  dispatch(
-    updateCartQuantity({
-      userId: user?.id,
-      productId: getCartItem?.productId,
-      quantity:
-        typeOfAction === "plus"
-          ? getCartItem?.quantity + 1
-          : getCartItem?.quantity - 1,
-    })
-  ).then((data) => {
-    if (data?.payload?.success) {
-      toast({
-        title: "Cart item is updated successfully",
-      });
-    }
-  });
-}
-
 
   function handleCartItemDelete(getCartItem) {
     dispatch(
       deleteCartItem({ userId: user?.id, productId: getCartItem?.productId })
     ).then((data) => {
       if (data?.payload?.success) {
-        toast({
-          title: "Cart item is deleted successfully",
-        });
+        toast({ title: "Item removed from cart" });
       }
     });
   }
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 p-4 border rounded-lg shadow-sm bg-white">
+      {/* Product Image */}
       <img
         src={cartItem?.image}
         alt={cartItem?.title}
-        className="w-20 h-20 rounded object-cover"
+        className="w-24 h-24 rounded-lg object-cover border"
       />
-      <div className="flex-1">
-        <h3 className="font-extrabold">{cartItem?.title}</h3>
-        <div className="flex items-center gap-2 mt-1">
+
+      {/* Title & Quantity */}
+      <div className="flex-1 w-full sm:w-auto">
+        <h3 className="text-lg font-bold text-[#4B2A3A]">{cartItem?.title}</h3>
+
+        <div className="mt-2 flex items-center gap-2">
           <Button
             variant="outline"
-            className="h-8 w-8 rounded-full"
+            className="h-8 w-8 rounded-full border border-[#4B2A3A]"
             size="icon"
             disabled={cartItem?.quantity === 1}
             onClick={() => handleUpdateQuantity(cartItem, "minus")}
           >
-            <Minus className="w-4 h-4" />
-            <span className="sr-only">Decrease</span>
+            <Minus className="w-4 h-4 text-[#4B2A3A]" />
           </Button>
-          <span className="font-semibold">{cartItem?.quantity}</span>
+
+          <span className="text-md font-semibold text-[#4B2A3A]">
+            {cartItem?.quantity}
+          </span>
+
           <Button
             variant="outline"
-            className="h-8 w-8 rounded-full"
+            className="h-8 w-8 rounded-full border border-[#4B2A3A]"
             size="icon"
             onClick={() => handleUpdateQuantity(cartItem, "plus")}
           >
-            <Plus className="w-4 h-4" />
-            <span className="sr-only">Decrease</span>
+            <Plus className="w-4 h-4 text-[#4B2A3A]" />
           </Button>
         </div>
       </div>
-      <div className="flex flex-col items-end">
-        <p className="font-semibold">
-          $
+
+      {/* Price & Delete */}
+      <div className="flex flex-col items-center sm:items-end justify-between h-full">
+        <p className="text-base font-bold text-[#4B2A3A]">
+          ₹
           {(
             (cartItem?.salePrice > 0 ? cartItem?.salePrice : cartItem?.price) *
             cartItem?.quantity
@@ -108,7 +112,7 @@ function handleUpdateQuantity(getCartItem, typeOfAction) {
         </p>
         <Trash
           onClick={() => handleCartItemDelete(cartItem)}
-          className="cursor-pointer mt-1"
+          className="text-red-500 hover:text-red-700 cursor-pointer mt-2"
           size={20}
         />
       </div>

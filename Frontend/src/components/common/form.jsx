@@ -1,154 +1,3 @@
-// import { Input } from "../ui/input";
-// import { Label } from "../ui/label";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "../ui/select";
-// import { Textarea } from "../ui/textarea";
-// import { Button } from "../ui/button";
-// import { motion } from "framer-motion";
-
-// function CommonForm({
-//   formControls,
-//   formData,
-//   setFormData,
-//   onSubmit,
-//   buttonText,
-//   isBtnDisabled,
-// }) {
-//   function renderInputsByComponentType(getControlItem) {
-//     let element = null;
-//     const value = formData[getControlItem.name] || "";
-
-//     switch (getControlItem.componentType) {
-//       case "input":
-//         element = (
-//           <Input
-//             name={getControlItem.name}
-//             placeholder={getControlItem.placeholder}
-//             id={getControlItem.name}
-//             type={getControlItem.type}
-//             value={value}
-//             className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-//             onChange={(event) =>
-//               setFormData({
-//                 ...formData,
-//                 [getControlItem.name]: event.target.value,
-//               })
-//             }
-//           />
-//         );
-//         break;
-//       case "select":
-//         element = (
-//           <Select
-//             onValueChange={(value) =>
-//               setFormData({
-//                 ...formData,
-//                 [getControlItem.name]: value,
-//               })
-//             }
-//             value={value}
-//           >
-//             <SelectTrigger className="w-full p-3 focus:ring-2 focus:ring-[#4A154B] transition-all duration-300">
-//               <SelectValue placeholder={getControlItem.label} />
-//             </SelectTrigger>
-//             <SelectContent>
-//               {getControlItem.options && getControlItem.options.length > 0
-//                 ? getControlItem.options.map((optionItem) => (
-//                     <SelectItem
-//                       key={optionItem.id}
-//                       value={optionItem.id}
-//                       className="hover:bg-orange-100 transition-all duration-200"
-//                     >
-//                       {optionItem.label}
-//                     </SelectItem>
-//                   ))
-//                 : null}
-//             </SelectContent>
-//           </Select>
-//         );
-//         break;
-//       case "textarea":
-//         element = (
-//           <Textarea
-//             name={getControlItem.name}
-//             placeholder={getControlItem.placeholder}
-//             id={getControlItem.id}
-//             value={value}
-//             className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-[#4A154B] transition-all duration-300"
-//             onChange={(event) =>
-//               setFormData({
-//                 ...formData,
-//                 [getControlItem.name]: event.target.value,
-//               })
-//             }
-//           />
-//         );
-//         break;
-//       default:
-//         element = (
-//           <Input
-//             name={getControlItem.name}
-//             placeholder={getControlItem.placeholder}
-//             id={getControlItem.name}
-//             type={getControlItem.type}
-//             value={value}
-//             className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-//             onChange={(event) =>
-//               setFormData({
-//                 ...formData,
-//                 [getControlItem.name]: event.target.value,
-//               })
-//             }
-//           />
-//         );
-//         break;
-//     }
-//     return element;
-//   }
-
-//   return (
-//     <motion.form
-//       initial={{ opacity: 0, scale: 0.95 }}
-//       animate={{ opacity: 1, scale: 1 }}
-//       transition={{ duration: 0.5 }}
-//       onSubmit={onSubmit}
-//       className="bg-white p-6 rounded-2xl  max-w-md mx-auto space-y-7"
-//     >
-//       <div className="flex flex-col gap-4">
-//         {formControls.map((controlItem) => (
-//           <div
-//             className="grid w-full gap-2"
-//             key={controlItem.name}
-//           >
-//             <Label className="mb-1 text-gray-700 font-medium">
-//               {controlItem.label}
-//             </Label>
-//             {renderInputsByComponentType(controlItem)}
-//           </div>
-//         ))}
-//       </div>
-//       <motion.button
-//         whileHover={{ scale: 1.05 }}
-//         whileTap={{ scale: 0.95 }}
-//         disabled={isBtnDisabled}
-//         type="submit"
-//         className="mt-4 w-full py-2 text-white bg-orange-400 rounded-lg shadow-md hover:bg-[#4A154B] focus:ring-2 focus:ring-orange-400 transition-all duration-300"
-//       >
-//         {buttonText || "Submit"}
-//       </motion.button>
-//     </motion.form>
-//   );
-// }
-
-
-// export default CommonForm;
-
-
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import {
@@ -159,7 +8,6 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
 import { motion } from "framer-motion";
 
 function CommonForm({
@@ -169,97 +17,87 @@ function CommonForm({
   onSubmit,
   buttonText,
   isBtnDisabled,
+  className = "",
+  inputClassName = "",
+  buttonClassName = "",
 }) {
-  function renderInputsByComponentType(getControlItem) {
-    let element = null;
-    const value = formData[getControlItem.name] || "";
+  function renderInputsByComponentType(controlItem) {
+    const value = formData[controlItem.name] || "";
 
-    switch (getControlItem.componentType) {
+    const baseInputStyle =
+      inputClassName ||
+      "w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#4B2A3A] bg-white/90";
+
+    switch (controlItem.componentType) {
       case "input":
-        element = (
+        return (
           <Input
-            name={getControlItem.name}
-            placeholder={getControlItem.placeholder}
-            id={getControlItem.name}
-            type={getControlItem.type}
+            name={controlItem.name}
+            id={controlItem.name}
+            type={controlItem.type}
+            placeholder={controlItem.placeholder}
             value={value}
-            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                [getControlItem.name]: event.target.value,
-              })
+            className={baseInputStyle}
+            onChange={(e) =>
+              setFormData({ ...formData, [controlItem.name]: e.target.value })
             }
           />
         );
-        break;
+
       case "select":
-        element = (
+        return (
           <Select
-            onValueChange={(value) =>
-              setFormData({
-                ...formData,
-                [getControlItem.name]: value,
-              })
-            }
             value={value}
+            onValueChange={(val) =>
+              setFormData({ ...formData, [controlItem.name]: val })
+            }
           >
-            <SelectTrigger className="w-full p-3 focus:ring-2 focus:ring-[#4A154B] transition-all duration-300">
-              <SelectValue placeholder={getControlItem.label} />
+            <SelectTrigger className={baseInputStyle}>
+              <SelectValue placeholder={controlItem.label} />
             </SelectTrigger>
             <SelectContent>
-              {getControlItem.options && getControlItem.options.length > 0
-                ? getControlItem.options.map((optionItem) => (
-                    <SelectItem
-                      key={optionItem.id}
-                      value={optionItem.id}
-                      className="hover:bg-orange-100 transition-all duration-200"
-                    >
-                      {optionItem.label}
-                    </SelectItem>
-                  ))
-                : null}
+              {controlItem.options?.map((optionItem) => (
+                <SelectItem
+                  key={optionItem.id}
+                  value={optionItem.id}
+                  className="hover:bg-[#823c8d]"
+                >
+                  {optionItem.label}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         );
-        break;
+
       case "textarea":
-        element = (
+        return (
           <Textarea
-            name={getControlItem.name}
-            placeholder={getControlItem.placeholder}
-            id={getControlItem.id}
+            name={controlItem.name}
+            id={controlItem.name}
+            placeholder={controlItem.placeholder}
             value={value}
-            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-[#4A154B] transition-all duration-300"
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                [getControlItem.name]: event.target.value,
-              })
+            className={baseInputStyle}
+            onChange={(e) =>
+              setFormData({ ...formData, [controlItem.name]: e.target.value })
             }
           />
         );
-        break;
+
       default:
-        element = (
+        return (
           <Input
-            name={getControlItem.name}
-            placeholder={getControlItem.placeholder}
-            id={getControlItem.name}
-            type={getControlItem.type}
+            name={controlItem.name}
+            id={controlItem.name}
+            type={controlItem.type}
+            placeholder={controlItem.placeholder}
             value={value}
-            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                [getControlItem.name]: event.target.value,
-              })
+            className={baseInputStyle}
+            onChange={(e) =>
+              setFormData({ ...formData, [controlItem.name]: e.target.value })
             }
           />
         );
-        break;
     }
-    return element;
   }
 
   return (
@@ -268,24 +106,31 @@ function CommonForm({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
       onSubmit={onSubmit}
-      className="bg-white p-6 rounded-2xl max-w-md mx-auto space-y-7"
+      className={`space-y-6 ${className}`}
     >
       <div className="flex flex-col gap-4">
         {formControls.map((controlItem) => (
-          <div className="grid w-full gap-2" key={controlItem.name}>
-            <Label className="mb-1 text-gray-700 font-medium">
+          <div key={controlItem.name} className="space-y-1">
+            <Label
+              htmlFor={controlItem.name}
+              className="text-sm font-medium text-[#4B2A3A]"
+            >
               {controlItem.label}
             </Label>
             {renderInputsByComponentType(controlItem)}
           </div>
         ))}
       </div>
+
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         disabled={isBtnDisabled}
         type="submit"
-        className="mt-4 w-full py-2 text-white bg-orange-400 rounded-lg shadow-md hover:bg-[#4A154B] focus:ring-2 focus:ring-orange-400 transition-all duration-300"
+        className={
+          buttonClassName ||
+          "w-full py-2 bg-[#ac60b8] text-[#4B2A3A] font-semibold rounded-md hover:bg-[#852596] transition-all duration-300"
+        }
       >
         {buttonText || "Submit"}
       </motion.button>
